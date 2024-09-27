@@ -1,0 +1,22 @@
+[
+    {
+        "niveau": "E3",
+        "naam": "Eten en drinken",
+        "beschrijving": "korte woorden - 1 lettergreep",
+        "woorden": ["peen", "kok", "kook", "druif", "sap", "ei", "prei", "soep", "fruit", "snoep", "smul", "koek", "reep", "sla", "slok", "fles", "pan", "pak", "mok", "ijs", "kaas", "wijn", "melk", "boon", "voer", "brood", "bord", "drop", "bes", "peer", "braam", "kers", "noot"]
+    },
+    {
+        "niveau": "E3",
+        "naam": "Beestenboel",
+        "beschrijving": "korte woorden - 1 lettergreep",
+        "woorden": ["vis", "poes", "koe", "bok", "tor", "mees", "kip", "uil", "aap", "pauw", "klauw", "vee", "voer", "zoem", "bij", "rups", "poot", "teen", "kop", "muis", "rat", "gier", "slak", "hert", "ree", "gans", "kwal", "zalm", "haas", "vos", "wolf", "rund", "spin", "fret", "gnoe", "pad", "duif", "hoen", "stier", "reu", "beer", "lam", "pup", "riem", "rui", "raaf", "zwijn", "mier", "rog", "hok", "hap", "baars"]
+    },
+    
+    {
+        "niveau": "M3",
+        "naam": "in huis",
+        "beschrijving": "korte woorden - 1 lettergreep",
+        "woorden": ["pen", "pot", "sok", "brief", "trui", "fles", "deur", "kast", "broek", "vork", "mes", "stoel", "la", "pop", "dop", "spel", "lamp", "kaars", "bak", "kom", "bord", "bel", "pil", "doek", "haak", "kraan", "krat", "rek", "mand", "krat", "kleed", "bloem", "mat", "vaas", "kist", "bad", "raam", "broek", "poep", "plas", "plee", "slaap", "sloop", "slip", "post", "vloer", "slot", "hal", "gum", "vlek", "glas", "bank"]
+    }
+    
+]

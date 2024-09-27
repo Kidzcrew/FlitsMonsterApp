@@ -9,21 +9,21 @@ import Foundation
 import SwiftData
 
 extension Lijst {
-    static let lijstM3 = Lijst(naam: "lijst groep 3 Start")
-    static let lijstM4 = Lijst(naam: "lijst groep 4")
-    static let lijstM5 = Lijst(naam: "lijst groep 5")
-    static let lijstM6 = Lijst(naam: "lijst groep 6")
-    static let lijstM7 = Lijst(naam: "lijst groep 7")
-    static let lijst8plus = Lijst(naam: "lijst groep 8")
-    static let lijstE3 = Lijst(naam: "lijst groep 3 Eind")
-    static let lijstE4 = Lijst(naam: "lijst groep 4 Eind")
-    static let lijstE5 = Lijst(naam: "lijst groep 5 Eind")
-    static let lijstE6 = Lijst(naam: "lijst groep 6 Eind")
-    static let lijstE7 = Lijst(naam: "lijst groep 7 Eind")
-  
+    static let lijstM3 = Lijst(naam: "lijst groep 3 Start", beschrijving: "Lijst voor groep 3", niveau: .M3)
+    static let lijstM4 = Lijst(naam: "lijst groep 4", beschrijving: "Lijst voor groep 4", niveau: .M4)
+    static let lijstM5 = Lijst(naam: "lijst groep 5", beschrijving: "Lijst voor groep 5", niveau: .M5)
+    static let lijstM6 = Lijst(naam: "lijst groep 6", beschrijving: "Lijst voor groep 6", niveau: .M6)
+    static let lijstM7 = Lijst(naam: "lijst groep 7", beschrijving: "Lijst voor groep 7", niveau: .M7)
+    static let lijst8plus = Lijst(naam: "lijst groep 8", beschrijving: "Lijst voor groep 8", niveau: .eightPlus)
+    static let lijstE3 = Lijst(naam: "lijst groep 3 Eind", beschrijving: "Eindlijst voor groep 3", niveau: .E3)
+    static let lijstE4 = Lijst(naam: "lijst groep 4 Eind", beschrijving: "Eindlijst voor groep 4", niveau: .E4)
+    static let lijstE5 = Lijst(naam: "lijst groep 5 Eind", beschrijving: "Eindlijst voor groep 5", niveau: .E5)
+    static let lijstE6 = Lijst(naam: "lijst groep 6 Eind", beschrijving: "Eindlijst voor groep 6", niveau: .E6)
+    static let lijstE7 = Lijst(naam: "lijst groep 7 Eind", beschrijving: "Eindlijst voor groep 7", niveau: .E7)
+    static let eigenlijst = Lijst(naam: "eigen lijst", beschrijving: "niveau niet bepaald", niveau: .eigen)
 
     static func insertSampleData(modelContext: ModelContext) {
-        // Add the Lijst categories to the model context.
+        // Voeg de Lijst categorieën toe aan de modelcontext.
         modelContext.insert(lijstM3)
         modelContext.insert(lijstM4)
         modelContext.insert(lijstM5)
@@ -36,8 +36,7 @@ extension Lijst {
         modelContext.insert(lijstE6)
         modelContext.insert(lijstE7)
         
-        
-        // Add the words to the model context.
+        // Voeg de woorden toe aan de modelcontext.
         modelContext.insert(Woord.aap)
         modelContext.insert(Woord.noot)
         modelContext.insert(Woord.mies)
@@ -52,8 +51,7 @@ extension Lijst {
         modelContext.insert(Woord.werken)
         modelContext.insert(Woord.kip)
         
-
-        // Set the category for each word.
+        // Koppel de woorden aan de juiste lijst.
         Woord.aap.lijst = lijstM3
         Woord.noot.lijst = lijstE3
         Woord.mies.lijst = lijstM4
@@ -67,7 +65,6 @@ extension Lijst {
         Woord.werken.lijst = lijst8plus
         Woord.kip.lijst = lijstE3
         Woord.gebakken.lijst = lijstE4
-
     }
     
     static func reloadSampleData(modelContext: ModelContext) {
@@ -79,4 +76,3 @@ extension Lijst {
         }
     }
 }
-
