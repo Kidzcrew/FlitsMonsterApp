@@ -10,24 +10,20 @@ import SwiftUI
 
 @Observable
 class NavigationContext {
-    var selectedLijstNaam: String?
+    var selectedLijst: Lijst?
     var selectedWoord: Woord?
     var columnVisibility: NavigationSplitViewVisibility
     
     var sidebarTitle = "Lijsten"
     
     var contentListTitle: String {
-        if let selectedLijstNaam {
-            selectedLijstNaam
-        } else {
-            ""
-        }
+        selectedLijst?.naam ?? ""
     }
     
-    init(selectedLijstNaam: String? = nil,
+    init(selectedLijst: Lijst? = nil,
          selectedWoord: Woord? = nil,
          columnVisibility: NavigationSplitViewVisibility = .automatic) {
-        self.selectedLijstNaam = selectedLijstNaam
+        self.selectedLijst = selectedLijst
         self.selectedWoord = selectedWoord
         self.columnVisibility = columnVisibility
     }

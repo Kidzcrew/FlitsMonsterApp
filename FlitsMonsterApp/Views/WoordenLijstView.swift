@@ -7,11 +7,11 @@ class MockNavigationContext: ObservableObject {
 }
 
 struct WoordenLijstView: View {
-    let woordLijstNaam: String?
+    let lijst: Lijst?
     
     var body: some View {
-        if let woordLijstNaam {
-            WoordLijst(lijstNaam: woordLijstNaam)
+        if let lijst = lijst {
+            WoordLijst(lijst: lijst)
         } else {
             ContentUnavailableView("Select a category", systemImage: "sidebar.left")
         }
@@ -19,7 +19,7 @@ struct WoordenLijstView: View {
 }
 
 private struct WoordLijst: View {
-    let lijstNaam: String
+    let lijst: Lijst
     @Environment(NavigationContext.self) private var navigationContext
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Woord.naam) private var woorden: [Woord]
@@ -51,12 +51,10 @@ private struct WoordLijst: View {
             }
         }
         .padding()
-        .navigationTitle(lijstNaam)
+        .navigationTitle(lijst.naam)
         
-        if let lijst = woorden.first?.lijst {
             Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
                 .font(.subheadline)
-        }
     }
     
     private func verwijderWoorden(at indexSet: IndexSet) {
@@ -86,7 +84,7 @@ private struct AddWoordButton: View {
 #Preview("WoordenLijstView") {
     ModelContainerPreview(ModelContainer.sample) {
         NavigationStack {
-            WoordenLijstView(woordLijstNaam: Lijst.lijstE3.naam)
+            WoordenLijstView(lijst: Lijst.lijstE3)
                 .environment(NavigationContext())
         }
     }
@@ -94,6 +92,6 @@ private struct AddWoordButton: View {
 
 #Preview("geen lijst geselecteerd") {
     ModelContainerPreview(ModelContainer.sample) {
-        WoordenLijstView(woordLijstNaam: nil)
+        WoordenLijstView(lijst: nil)
     }
 }

@@ -16,7 +16,7 @@ struct LijstenView: View {
 
     var body: some View {
         @Bindable var navigationContext = navigationContext
-        List(selection: $navigationContext.selectedLijstNaam) {
+        List(selection: $navigationContext.selectedLijst) {
             #if os(macOS)
             Section(navigationContext.sidebarTitle) {
                 ListCategories(woordLijsten: woordLijsten)
@@ -42,6 +42,7 @@ struct LijstenView: View {
         }
         .task {
             if woordLijsten.isEmpty {
+                print("woordenlijst is leeg - sample gebruikt")
                 Lijst.insertSampleData(modelContext: modelContext)
             }
         }
@@ -50,7 +51,7 @@ struct LijstenView: View {
     @MainActor
     private func reloadSampleData() {
         navigationContext.selectedWoord = nil
-        navigationContext.selectedLijstNaam = nil
+        navigationContext.selectedLijst = nil
         Lijst.reloadSampleData(modelContext: modelContext)
     }
 }
@@ -60,7 +61,7 @@ private struct ListCategories: View {
     
     var body: some View {
         ForEach(woordLijsten) { lijst in
-            NavigationLink(lijst.naam, value: lijst.naam)
+            NavigationLink(lijst.naam, value: lijst)
         }
     }
 }

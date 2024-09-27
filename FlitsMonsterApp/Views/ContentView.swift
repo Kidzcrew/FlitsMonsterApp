@@ -21,9 +21,8 @@ struct ContentView: View {
         // Fetch alle Lijst-objecten via SwiftData
         let lijsten = try! context.fetch(FetchDescriptor<Lijst>())
         
-        // Controleer of de lijsten een standaardniveau hebben, en wijs zo nodig een standaardwaarde toe
-        for lijst in lijsten {
-            if lijst.niveau == .S {  // Stel bijvoorbeeld alleen in als het niveau een specifieke waarde heeft
+         for lijst in lijsten {
+            if lijst.niveau == .S {
                 lijst.niveau = .S  // Standaardwaarde voor lijsten die geen niveau hebben
             }
         }

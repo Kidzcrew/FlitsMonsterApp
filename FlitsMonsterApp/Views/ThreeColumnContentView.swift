@@ -18,7 +18,7 @@ struct ThreeColumnContentView: View {
             LijstenView()
                 .navigationTitle(navigationContext.sidebarTitle)
         } content: {
-            WoordenLijstView(woordLijstNaam: navigationContext.selectedLijstNaam)
+            WoordenLijstView(lijst: navigationContext.selectedLijst)
                 .navigationTitle(navigationContext.contentListTitle)
         } detail: {
             NavigationStack {
