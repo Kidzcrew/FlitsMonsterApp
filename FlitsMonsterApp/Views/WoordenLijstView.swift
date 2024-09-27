@@ -1,12 +1,10 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A view that displays a list of woorden.
-*/
-
 import SwiftUI
 import SwiftData
+
+// Mock-up NavigationContext for Preview purposes
+class MockNavigationContext: ObservableObject {
+    @Published var selectedWoord: Woord?
+}
 
 struct WoordenLijstView: View {
     let woordLijstNaam: String?
@@ -25,64 +23,39 @@ private struct WoordLijst: View {
     @Environment(NavigationContext.self) private var navigationContext
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Woord.naam) private var woorden: [Woord]
-    @Query private var lijsten: [Lijst]  // Query om de lijst op te halen
     @State private var isEditorPresented = false
-
-    init(lijstNaam: String) {
-        self.lijstNaam = lijstNaam
-        let predicate = #Predicate<Woord> { woord in
-            woord.lijst?.naam == lijstNaam
-        }
-        _woorden = Query(filter: predicate, sort: \Woord.naam)
-        
-        // Query om de lijst op basis van naam op te halen
-        let lijstPredicate = #Predicate<Lijst> { lijst in
-            lijst.naam == lijstNaam
-        }
-        _lijsten = Query(filter: lijstPredicate)
-    }
     
     var body: some View {
         @Bindable var navigationContext = navigationContext
-        
-        if let lijst = lijsten.first {  // Zorg ervoor dat de lijst bestaat
-            VStack(alignment: .leading, spacing: 10) {
-                // Toon beschrijving en niveau
-                Text(lijst.beschrijving)
-                    .font(.headline)
-                Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                
-                // Woordenlijst weergave
-                List(selection: $navigationContext.selectedWoord) {
-                    ForEach(woorden) { woord in
-                        NavigationLink(woord.naam, value: woord)
-                    }
-                    .onDelete(perform: verwijderWoorden)
-                }
-                .sheet(isPresented: $isEditorPresented) {
-                    WoordEditor(woord: nil)
-                }
-                .overlay {
-                    if woorden.isEmpty {
-                        ContentUnavailableView {
-                            Label("Geen Woorden in deze lijst", systemImage: "pawprint")
-                        } description: {
-                            AddWoordButton(isActive: $isEditorPresented)
-                        }
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        AddWoordButton(isActive: $isEditorPresented)
-                    }
+        List(selection: $navigationContext.selectedWoord) {
+            ForEach(woorden) { woord in
+                NavigationLink(woord.naam, value: woord)
+            }
+            .onDelete(perform: verwijderWoorden)
+        }
+        .sheet(isPresented: $isEditorPresented) {
+            WoordEditor(woord: nil)
+        }
+        .overlay {
+            if woorden.isEmpty {
+                ContentUnavailableView {
+                    Label("Geen Woorden in deze lijst", systemImage: "pawprint")
+                } description: {
+                    AddWoordButton(isActive: $isEditorPresented)
                 }
             }
-            .padding()
-            .navigationTitle(lijst.naam)  // Toon de naam van de lijst als titel
-        } else {
-            Text("Geen lijst gevonden.")  // Toon als er geen lijst is
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                AddWoordButton(isActive: $isEditorPresented)
+            }
+        }
+        .padding()
+        .navigationTitle(lijstNaam)
+        
+        if let lijst = woorden.first?.lijst {
+            Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
+                .font(.subheadline)
         }
     }
     
@@ -123,15 +96,4 @@ private struct AddWoordButton: View {
     ModelContainerPreview(ModelContainer.sample) {
         WoordenLijstView(woordLijstNaam: nil)
     }
-}
-
-#Preview("Geen woorden") {
-    ModelContainerPreview(ModelContainer.sample) {
-        WoordLijst(lijstNaam: Lijst.lijstM5.naam)
-            .environment(NavigationContext())
-    }
-}
-
-#Preview("AddWoordButton") {
-    AddWoordButton(isActive: .constant(false))
 }

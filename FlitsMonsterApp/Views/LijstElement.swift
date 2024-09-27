@@ -1,13 +1,4 @@
-//
-//  LijstElement.swift
-//  FlitsMonsterApp
-//
-//  Created by Jeroen de Bruin on 27/09/2024.
-//
-
-
-import SwiftUI
-import SwiftData
+/* import SwiftUI
 
 struct LijstElement: View {
     @State private var isExpanded: Bool = false
@@ -16,7 +7,6 @@ struct LijstElement: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                // Achtergrond met dynamische kleuren uit de lijst
                 UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10, topTrailing: 10))
                     .frame(height: 110.0)
                     .foregroundStyle(
@@ -27,26 +17,25 @@ struct LijstElement: View {
                         )
                     )
 
-                // Hoofdinformatie van de lijst
                 HStack {
-                    Image(lijst.icoon) // Icoon van de lijst
+                    Image(lijst.icoon)
                         .resizable()
                         .padding(.horizontal, 10)
                         .scaledToFit()
                         .frame(width: 100)
 
                     VStack(alignment: .leading) {
-                        Text(lijst.naam) // Naam van de lijst
+                        Text(lijst.naam)
                             .foregroundStyle(.white)
                             .font(.footnote)
-                        Text(lijst.beschrijving) // Beschrijving van de lijst
+                        Text(lijst.beschrijving)
                             .foregroundStyle(.white)
                             .bold()
                             .font(.subheadline)
                     }
                     Spacer()
 
-                    // Navigatieknop naar de detailweergave van de lijst
+                    // Correcte aanroep naar WoordenLijstView met een Lijst-object
                     NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
                         Image(systemName: "chevron.right")
                             .resizable()
@@ -60,19 +49,16 @@ struct LijstElement: View {
             }
             .frame(maxWidth: 400)
 
-            // Voortgangsbalk
             ProgressView(value: Double(lijst.voortgang) / 100.0)
                 .progressViewStyle(LinearProgressViewStyle(tint: .green))
                 .frame(maxWidth: 400, maxHeight: 3)
                 .padding(.vertical, -4)
 
-            // Uitklapbare sectie
             ZStack {
                 UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10))
                     .frame(height: isExpanded ? 100.0 : 40.0)
                     .foregroundStyle(Color.white)
 
-                // Inhoud van de uitklapbare sectie
                 VStack {
                     if isExpanded {
                         HStack {
@@ -99,7 +85,6 @@ struct LijstElement: View {
                             .background(Color.gray)
                             .opacity(0.5)
 
-                        // Knoppen voor acties
                         HStack {
                             Button(action: {
                                 print("Favoriet aangeraakt")
@@ -131,7 +116,6 @@ struct LijstElement: View {
                             }
                             Spacer()
 
-                            // Uitklapbare sectie
                             Button(action: {
                                 withAnimation {
                                     isExpanded.toggle()
@@ -191,14 +175,13 @@ struct LijstElement: View {
 #Preview {
     LijstElement(
         lijst: Lijst(
-            naam: "Voorbeeldlijst", 
-            beschrijving: "Voorbeeld", 
-            niveau: .M3, 
-            voortgang: 50, 
-            kleurPrimair: "#FF512F", 
-            kleurSecundair: "#1BFFFF", 
-            icoon: "star", 
-            woordenInLijst: []
+            naam: "Voorbeeldlijst",
+            beschrijving: "Voorbeeldbeschrijving",
+            niveau: .M3,
+            kleurPrimair: "#FF512F",
+            kleurSecundair: "#1BFFFF",
+            icoon: "star"
         )
     )
 }
+*/
