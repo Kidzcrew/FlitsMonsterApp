@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "63514E1E-D56A-45DF-804B-8201987B294F",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:FlitsMonsterApp.xcodeproj",
+      "identifier" : "90776DD22CA42245009162E1",
+      "name" : "FlitsMonsterApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:FlitsMonsterApp.xcodeproj",
+        "identifier" : "90776DE52CA42246009162E1",
+        "name" : "FlitsMonsterAppTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:FlitsMonsterApp.xcodeproj",
+        "identifier" : "90776DEF2CA42246009162E1",
+        "name" : "FlitsMonsterAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

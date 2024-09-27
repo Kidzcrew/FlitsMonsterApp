@@ -27,6 +27,7 @@
 		90776DD32CA42245009162E1 /* FlitsMonsterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlitsMonsterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90776DE62CA42246009162E1 /* FlitsMonsterAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlitsMonsterAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90776DF02CA42246009162E1 /* FlitsMonsterAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlitsMonsterAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		90C1B2F92CA56E2B0074C7DC /* FlitsMonsterApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlitsMonsterApp.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,6 +44,16 @@
 		90776DF32CA42246009162E1 /* FlitsMonsterAppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FlitsMonsterAppUITests;
+			sourceTree = "<group>";
+		};
+		90776E1A2CA48EBF009162E1 /* PreviewHelper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PreviewHelper;
+			sourceTree = "<group>";
+		};
+		90776E202CA48ED9009162E1 /* Data */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,7 +86,10 @@
 		90776DCA2CA42245009162E1 = {
 			isa = PBXGroup;
 			children = (
+				90C1B2F92CA56E2B0074C7DC /* FlitsMonsterApp.xctestplan */,
 				90776DD52CA42245009162E1 /* FlitsMonsterApp */,
+				90776E202CA48ED9009162E1 /* Data */,
+				90776E1A2CA48EBF009162E1 /* PreviewHelper */,
 				90776DE92CA42246009162E1 /* FlitsMonsterAppTests */,
 				90776DF32CA42246009162E1 /* FlitsMonsterAppUITests */,
 				90776DD42CA42245009162E1 /* Products */,
@@ -109,6 +123,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				90776DD52CA42245009162E1 /* FlitsMonsterApp */,
+				90776E1A2CA48EBF009162E1 /* PreviewHelper */,
+				90776E202CA48ED9009162E1 /* Data */,
 			);
 			name = FlitsMonsterApp;
 			packageProductDependencies = (

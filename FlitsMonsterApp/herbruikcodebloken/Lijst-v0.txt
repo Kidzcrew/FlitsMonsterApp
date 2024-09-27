@@ -1,0 +1,54 @@
+/*
+import Foundation
+
+extension Lijst {
+    static let voorbeeldLijst = Lijst(
+        naam: "Voorbeeldlijst",
+        niveau: "M3",
+        omschrijving: "Voorbeeldlijst met woorden",
+        timestamp: Date(),
+        voortgang: 0,
+        kleurPrimair: "#FF512F",
+        kleurSecundair: "#1BFFFF",
+        icoon: "Monster4",
+        woordenInLijst: [
+            Woord(naam: "kat"),
+            Woord(naam: "rat"),
+            Woord(naam: "muis")
+        ]
+    )
+
+    static let voorbeeldLijsten: [Lijst] = [
+        Lijst(
+            naam: "Voorbeeld 1",
+            niveau: "M3",
+            omschrijving: "Beschrijving van voorbeeld 1",
+            timestamp: Date(),
+            voortgang: 0,
+            kleurPrimair: "#FF512F",
+            kleurSecundair: "#1BFFFF",
+            icoon: "Monster1",
+            woordenInLijst: [Woord(naam: "woord1")]
+        ),
+        Lijst(
+            naam: "Voorbeeld 2",
+            niveau: "M2",
+            omschrijving: "Beschrijving van voorbeeld 2",
+            timestamp: Date(),
+            voortgang: 50,
+            kleurPrimair: "#FF0000",
+            kleurSecundair: "#00FF00",
+            icoon: "Monster2",
+            woordenInLijst: [Woord(naam: "woord2")]
+        )
+    ]
+}
+
+extension Woord {
+    static let voorbeeldWoorden = [
+        Woord(naam: "kat"),
+        Woord(naam: "rat"),
+        Woord(naam: "muis")
+    ]
+}
+*/
