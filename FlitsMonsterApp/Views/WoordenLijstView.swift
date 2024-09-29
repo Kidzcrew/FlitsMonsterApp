@@ -21,14 +21,14 @@ struct WoordenLijstView: View {
 private struct WoordLijst: View {
     let lijst: Lijst
     @Environment(NavigationContext.self) private var navigationContext
-    @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Woord.naam) private var woorden: [Woord]
     @State private var isEditorPresented = false
-    
+
+    // Direct gebruik maken van de lijst.woorden relatie
     var body: some View {
         @Bindable var navigationContext = navigationContext
         List(selection: $navigationContext.selectedWoord) {
-            ForEach(woorden) { woord in
+            // Geen optionele chaining, want lijst.woorden is geen optioneel type
+            ForEach(lijst.woorden) { woord in
                 NavigationLink(woord.naam, value: woord)
             }
             .onDelete(perform: verwijderWoorden)
@@ -37,7 +37,7 @@ private struct WoordLijst: View {
             WoordEditor(woord: nil)
         }
         .overlay {
-            if woorden.isEmpty {
+            if lijst.woorden.isEmpty {
                 ContentUnavailableView {
                     Label("Geen Woorden in deze lijst", systemImage: "pawprint")
                 } description: {
@@ -53,17 +53,18 @@ private struct WoordLijst: View {
         .padding()
         .navigationTitle(lijst.naam)
         
-            Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
-                .font(.subheadline)
+        Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
+            .font(.subheadline)
     }
     
     private func verwijderWoorden(at indexSet: IndexSet) {
         for index in indexSet {
-            let woordToDelete = woorden[index]
+            let woordToDelete = lijst.woorden[index]
             if navigationContext.selectedWoord?.persistentModelID == woordToDelete.persistentModelID {
                 navigationContext.selectedWoord = nil
             }
-            modelContext.delete(woordToDelete)
+            // Verwijder het woord uit de lijst.woorden array
+            lijst.woorden.remove(at: index)
         }
     }
 }

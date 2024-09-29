@@ -1,28 +1,27 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A view that shows a list of woordenlijsten.
-*/
-
 import SwiftUI
 import SwiftData
 
 struct ThreeColumnContentView: View {
     @Environment(NavigationContext.self) private var navigationContext
     @Environment(\.modelContext) private var modelContext
-    
+
     var body: some View {
         @Bindable var navigationContext = navigationContext
         NavigationSplitView(columnVisibility: $navigationContext.columnVisibility) {
-            LijstenView()
+            LijstenView() // Geeft de lijst-weergave
                 .navigationTitle(navigationContext.sidebarTitle)
         } content: {
-            WoordenLijstView(lijst: navigationContext.selectedLijst)
-                .navigationTitle(navigationContext.contentListTitle)
+            if let selectedLijst = navigationContext.selectedLijst {
+                WoordenLijstView(lijst: selectedLijst) // Doorgeven van de geselecteerde lijst
+                    .navigationTitle(selectedLijst.naam) // Gebruik lijstnaam als titel
+            } else {
+                Text("Selecteer een lijst") // Als geen lijst is geselecteerd
+            }
         } detail: {
-            NavigationStack {
-                WoordDetailView(woord: navigationContext.selectedWoord)
+            if let selectedWoord = navigationContext.selectedWoord {
+                WoordDetailView(woord: selectedWoord) // Doorgeven van het geselecteerde woord
+            } else {
+                Text("Selecteer een woord") // Als geen woord is geselecteerd
             }
         }
     }
