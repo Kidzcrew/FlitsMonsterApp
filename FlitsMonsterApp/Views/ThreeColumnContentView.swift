@@ -8,20 +8,40 @@ struct ThreeColumnContentView: View {
     var body: some View {
         @Bindable var navigationContext = navigationContext
         NavigationSplitView(columnVisibility: $navigationContext.columnVisibility) {
-            LijstenView() // Geeft de lijst-weergave
+            // Sidebar voor de lijsten
+            LijstenView()
                 .navigationTitle(navigationContext.sidebarTitle)
         } content: {
+            // Content weergave voor geselecteerde lijst
             if let selectedLijst = navigationContext.selectedLijst {
-                WoordenLijstView(lijst: selectedLijst) // Doorgeven van de geselecteerde lijst
-                    .navigationTitle(selectedLijst.naam) // Gebruik lijstnaam als titel
+                WoordenLijstView(lijst: selectedLijst)
+                    .navigationTitle(selectedLijst.naam)
             } else {
-                Text("Selecteer een lijst") // Als geen lijst is geselecteerd
+                Text("Selecteer een lijst")
             }
         } detail: {
+            // Detailweergave voor geselecteerd woord
             if let selectedWoord = navigationContext.selectedWoord {
-                WoordDetailView(woord: selectedWoord) // Doorgeven van het geselecteerde woord
+                WoordDetailView(woord: selectedWoord)
+                    .navigationTitle(selectedWoord.naam)
+                    .onAppear {
+                        // Sluit de zijbalk en content view als een woord is geselecteerd
+                        navigationContext.columnVisibility = .detailOnly
+                    }
             } else {
-                Text("Selecteer een woord") // Als geen woord is geselecteerd
+                Text("Selecteer een woord")
+            }
+        }
+        .onChange(of: navigationContext.selectedWoord) { _ in
+            // Elke keer als een nieuw woord wordt geselecteerd, verberg de zijbalk en content view
+            if navigationContext.selectedWoord != nil {
+                navigationContext.columnVisibility = .detailOnly
+            }
+        }
+        .onAppear {
+            // Zorg ervoor dat de kolomzichtbaarheid is ingesteld op alle kolommen (sidebar + detail) bij de start
+            if navigationContext.selectedLijst == nil {
+                navigationContext.columnVisibility = .all
             }
         }
     }
