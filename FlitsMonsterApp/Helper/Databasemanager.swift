@@ -7,6 +7,7 @@ struct StandaardLijst: Codable {
     let naam: String
     let beschrijving: String
     let woorden: [String]
+    let icoon: String
 }
 
 // Functie om de JSON-data te laden en om te zetten naar een array van StandaardLijst structs
@@ -25,7 +26,7 @@ func voegStandaardLijstenToeVanuitJSON(context: ModelContext) {
                 print("Ongeldig niveau voor lijst: \(lijstInfo.naam)")
                 continue
             }
-            let nieuweLijst = Lijst(naam: lijstInfo.naam, beschrijving: lijstInfo.beschrijving, niveau: niveau)
+            let nieuweLijst = Lijst(naam: lijstInfo.naam, beschrijving: lijstInfo.beschrijving, niveau: niveau, icoon: lijstInfo.icoon)
             context.insert(nieuweLijst)
             
             // Voeg de woorden toe aan de nieuwe lijst

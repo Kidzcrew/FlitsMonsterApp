@@ -3,20 +3,39 @@
         "niveau": "E3",
         "naam": "Eten en drinken",
         "beschrijving": "korte woorden - 1 lettergreep",
-        "woorden": ["peen", "kok", "kook", "druif", "sap", "ei", "prei", "soep", "fruit", "snoep", "smul", "koek", "reep", "sla", "slok", "fles", "pan", "pak", "mok", "ijs", "kaas", "wijn", "melk", "boon", "voer", "brood", "bord", "drop", "bes", "peer", "braam", "kers", "noot"]
+        "woorden": ["peen", "kok", "kook", "druif", "sap", "ei", "prei", "soep", "fruit", "snoep", "smul", "koek", "reep", "sla", "slok", "fles", "pan", "pak", "mok", "ijs", "kaas", "wijn", "melk", "boon", "voer", "brood", "bord", "drop", "bes", "peer", "braam", "kers", "noot"],
+        "icoon":"monster15"
     },
     {
         "niveau": "E3",
         "naam": "Beestenboel",
         "beschrijving": "korte woorden - 1 lettergreep",
-        "woorden": ["vis", "poes", "koe", "bok", "tor", "mees", "kip", "uil", "aap", "pauw", "klauw", "vee", "voer", "zoem", "bij", "rups", "poot", "teen", "kop", "muis", "rat", "gier", "slak", "hert", "ree", "gans", "kwal", "zalm", "haas", "vos", "wolf", "rund", "spin", "fret", "gnoe", "pad", "duif", "hoen", "stier", "reu", "beer", "lam", "pup", "riem", "rui", "raaf", "zwijn", "mier", "rog", "hok", "hap", "baars"]
+        "woorden": ["vis", "poes", "koe", "bok", "tor", "mees", "kip", "uil", "aap", "pauw", "klauw", "vee", "voer", "zoem", "bij", "rups", "poot", "teen", "kop", "muis", "rat", "gier", "slak", "hert", "ree", "gans", "kwal", "zalm", "haas", "vos", "wolf", "rund", "spin", "fret", "gnoe", "pad", "duif", "hoen", "stier", "reu", "beer", "lam", "pup", "riem", "rui", "raaf", "zwijn", "mier", "rog", "hok", "hap", "baars"],
+        "icoon":"beestenboel"
     },
     
     {
         "niveau": "M3",
         "naam": "in huis",
         "beschrijving": "korte woorden - 1 lettergreep",
-        "woorden": ["pen", "pot", "sok", "brief", "trui", "fles", "deur", "kast", "broek", "vork", "mes", "stoel", "la", "pop", "dop", "spel", "lamp", "kaars", "bak", "kom", "bord", "bel", "pil", "doek", "haak", "kraan", "krat", "rek", "mand", "krat", "kleed", "bloem", "mat", "vaas", "kist", "bad", "raam", "broek", "poep", "plas", "plee", "slaap", "sloop", "slip", "post", "vloer", "slot", "hal", "gum", "vlek", "glas", "bank"]
+        "woorden": ["pen", "pot", "sok", "brief", "trui", "fles", "deur", "kast", "broek", "vork", "mes", "stoel", "la", "pop", "dop", "spel", "lamp", "kaars", "bak", "kom", "bord", "bel", "pil", "doek", "haak", "kraan", "krat", "rek", "mand", "krat", "kleed", "bloem", "mat", "vaas", "kist", "bad", "raam", "broek", "poep", "plas", "plee", "slaap", "sloop", "slip", "post", "vloer", "slot", "hal", "gum", "vlek", "glas", "bank"],
+        "icoon":"monster8"
+    },
+    
+    {
+        "niveau": "E3",
+        "naam": "buiten",
+        "beschrijving": "korte woorden met dingen buiten",
+        "woorden": ["zon", "boot", "dak", "maan", "man", "roos", "bloem", "huis", "stoep", "zon", "bal", "wei", "fiets", "beuk", "berk", "eik", "boom", "weg", "stad", "dorp", "kar", "gras", "blad", "tak", "groen", "geel", "rood", "weer", "wolk", "speel"],
+        "icoon": "monsterbuiten"
+    },
+    
+    {
+        "niveau": "M4",
+        "naam": "inkomertjes",
+        "beschrijving": "korte woorden om er lekker in te komen",
+        "woorden": ["bil", "hut", "boom", "krop", "hol", "voor", "duif", "hun", "bleek", "week", "fel", "wet", "nek", "teer", "rouw", "fit", "ik", "boer", "bel", "voer", "weer", "muur", "goor", "koek", "bal", "tak", "mug", "geur", "met", "juf", "poot", "muis", "oor", "knop", "roem", "ruim", "keur", "bol", "pot", "pop", "tas", "por", "keek", "peer", "kop", "bijl", "boef", "deur", "dief", "mouw", "toer", "duim", "touw", "vies", "riet", "vier", "weg", "wel", "heer", "vijf", "roer", "tiet", "doek", "leer", "bier", "zeer", "leek", "beur", "drie", "twee", "zes", "koe", "rijp", "kous", "lift", "paas", "slaap", "sloop", "doos", "plan", "traag", "proef", "troon", "vaar", "prik", "slap", "meest", "boon", "keer", "zeg", "dor", "arm", "turf", "vlerk", "staat", "stronk", "boot", "lamp", "munt", "plas", "pak", "dop", "park", "vast", "warm", "vaas", "harp", "pret", "saus", "bot", "doof", "boos", "kas", "vorm", "vlas", "hap", "heks", "boor", "durf", "blik", "door", "drom", "kleine", "kans", "kern", "prak", "juist", "voorn", "trap", "dof", "bok", "mes", "frons", "vaat", "start", "strak", "vroeg", "mens", "kleuter", "dor", "vat", "park", "zorg", "worm", "stak", "grap", "groep", "vleet", "bont"],
+        "icoon": "monster2"
     }
     
 ]

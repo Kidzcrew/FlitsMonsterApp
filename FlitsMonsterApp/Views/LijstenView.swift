@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-A view that displays a list of woorden lijsten 
-*/
-
 import SwiftUI
 import SwiftData
 
@@ -13,17 +6,47 @@ struct LijstenView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Lijst.naam) private var woordLijsten: [Lijst]
     @State private var isReloadPresented = false
+    @State private var geselecteerdeGroep: String = AppSettings.getGeselecteerdeGroep() // Haal geselecteerde groep op
+
+    let alleGroepen = ["Alle lijsten", "Groep 3", "Groep 4", "Groep 5", "Groep 6", "Groep 7", "Groep 8"]
+
+    var gefilterdeLijsten: [Lijst] {
+        if geselecteerdeGroep != "Alle lijsten" {
+            return filterLijstenOpGroep(geselecteerdeGroep)
+        } else {
+            return woordLijsten
+        }
+    }
 
     var body: some View {
         @Bindable var navigationContext = navigationContext
-        List(selection: $navigationContext.selectedLijst) {
-            #if os(macOS)
-            Section(navigationContext.sidebarTitle) {
-                ListCategories(woordLijsten: woordLijsten)
+        VStack {
+            HStack {
+                Text("Filter op groep:")
+                Menu {
+                    ForEach(alleGroepen, id: \.self) { groep in
+                        Button(groep) {
+                            geselecteerdeGroep = groep
+                            AppSettings.setGeselecteerdeGroep(groep) // Sla geselecteerde groep op
+                            print("Geselecteerde groep: \(groep)") // Print de geselecteerde groep
+                        }
+                    }
+                } label: {
+                    Label(geselecteerdeGroep, systemImage: "line.horizontal.3.decrease.circle")
+                }
+                Spacer()
             }
-            #else
-            ListCategories(woordLijsten: woordLijsten)
-            #endif
+            .padding()
+
+            List(selection: $navigationContext.selectedLijst) {
+                #if os(macOS)
+                Section(navigationContext.sidebarTitle) {
+                    ListCategories(woordLijsten: gefilterdeLijsten)
+                }
+                #else
+                ListCategories(woordLijsten: gefilterdeLijsten)
+                #endif
+            }
         }
         .alert("Reload Sample Data?", isPresented: $isReloadPresented) {
             Button("Yes, reload sample data", role: .destructive) {
@@ -47,18 +70,37 @@ struct LijstenView: View {
             }
         }
     }
-    
+
     @MainActor
     private func reloadSampleData() {
         navigationContext.selectedWoord = nil
         navigationContext.selectedLijst = nil
         Lijst.reloadSampleData(modelContext: modelContext)
     }
+
+    private func filterLijstenOpGroep(_ groep: String) -> [Lijst] {
+        switch groep {
+        case "Groep 3":
+            return woordLijsten.filter { ["S", "M3", "E3"].contains($0.niveau?.rawValue ?? "") }
+        case "Groep 4":
+            return woordLijsten.filter { ["E3", "M4", "E4"].contains($0.niveau?.rawValue ?? "") }
+        case "Groep 5":
+            return woordLijsten.filter { ["E4", "M5", "E5"].contains($0.niveau?.rawValue ?? "") }
+        case "Groep 6":
+            return woordLijsten.filter { ["E5", "M6", "E6"].contains($0.niveau?.rawValue ?? "") }
+        case "Groep 7":
+            return woordLijsten.filter { ["E6", "M7", "E7"].contains($0.niveau?.rawValue ?? "") }
+        case "Groep 8":
+            return woordLijsten.filter { ["E7", "8+"].contains($0.niveau?.rawValue ?? "") }
+        default:
+            return woordLijsten
+        }
+    }
 }
 
 private struct ListCategories: View {
     var woordLijsten: [Lijst]
-    
+
     var body: some View {
         ForEach(woordLijsten) { lijst in
             NavigationLink(lijst.naam, value: lijst)

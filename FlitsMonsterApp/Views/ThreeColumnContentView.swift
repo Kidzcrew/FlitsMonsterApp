@@ -15,7 +15,7 @@ struct ThreeColumnContentView: View {
             // Content weergave voor geselecteerde lijst
             if let selectedLijst = navigationContext.selectedLijst {
                 WoordenLijstView(lijst: selectedLijst)
-                    .navigationTitle(selectedLijst.naam)
+                   /* .navigationTitle(selectedLijst.naam)*/
             } else {
                 Text("Selecteer een lijst")
             }

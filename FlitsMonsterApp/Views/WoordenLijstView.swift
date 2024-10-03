@@ -1,20 +1,12 @@
 import SwiftUI
 import SwiftData
 
-// Mock-up NavigationContext for Preview purposes
-class MockNavigationContext: ObservableObject {
-    @Published var selectedWoord: Woord?
-}
-
 struct WoordenLijstView: View {
     let lijst: Lijst?
-    
-    @State private var isLijstEditorPresented = false
-    @State private var isVoortgangSheetPresented = false
-    
+
     var body: some View {
         if let lijst = lijst {
-            WoordLijst(lijst: lijst, isLijstEditorPresented: $isLijstEditorPresented, isVoortgangSheetPresented: $isVoortgangSheetPresented)
+            WoordLijst(lijst: lijst)
         } else {
             ContentUnavailableView("Select a category", systemImage: "sidebar.left")
         }
@@ -24,17 +16,82 @@ struct WoordenLijstView: View {
 private struct WoordLijst: View {
     let lijst: Lijst
     @Environment(NavigationContext.self) private var navigationContext
+    @Environment(\.dismiss) private var dismiss // For manual back navigation
     @State private var isWoordEditorPresented = false
-    @Binding var isLijstEditorPresented: Bool
-    @Binding var isVoortgangSheetPresented: Bool
+    @State private var isLijstEditorPresented = false
+    @State private var isVoortgangSheetPresented = false
 
     var body: some View {
-        @Bindable var navigationContext = navigationContext
-        List(selection: $navigationContext.selectedWoord) {
-            ForEach(lijst.woorden) { woord in
-                NavigationLink(woord.naam, value: woord)
+        VStack {
+            ZStack(alignment: .top) {
+                // Image behind the back button
+                Image(lijst.icoon)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 350)
+                    .clipped()
+                    .clipShape(RoundedCorners(radius: 25, corners: [.bottomLeft, .bottomRight]))
+                    .ignoresSafeArea(edges: .top)
+
+                // Title and Toolbar positioned below the image
+                VStack(alignment: .leading) {
+                    Spacer(minLength: 230)
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Niveau
+                        HStack {
+                            Text("niveau:")
+                                .font(.caption)
+                                .foregroundColor(.black)
+                                .padding(6)
+
+                            Text(lijst.niveau?.rawValue ?? "E3")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .padding(6)
+                                .background(RoundedRectangle(cornerRadius: 3).fill(Color.purple))
+
+                            Spacer()
+
+                            // Toolbar buttons
+                            HStack(spacing: 20) {
+                                BewerkLijstButton(isActive: $isLijstEditorPresented)
+                                StatistiekenButton(isActive: $isVoortgangSheetPresented)
+                                AddWoordButton(isActive: $isWoordEditorPresented)
+                            }
+                            .padding(10)
+                           // .background(Color(UIColor.systemGray5))
+                        }
+                        .background(
+                            RoundedRectangle(cornerRadius: 10) // Afgeronde hoeken
+                                .fill(Color(UIColor.systemGray5)) // Achtergrondkleur
+                        )
+
+                        Text(lijst.naam)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+
+                        Text(lijst.beschrijving)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    .padding([.leading, .trailing])
+
+
+                    // Woordenlijst
+                    List {
+                        Text("Woorden:")
+                            .font(.headline)
+
+                        ForEach(lijst.woorden) { woord in
+                            NavigationLink(destination: WoordDetailView(woord: woord)) {
+                                Text(woord.naam)
+                            }
+                        }
+                    }
+                    .listStyle(InsetGroupedListStyle())
+                }
             }
-            .onDelete(perform: verwijderWoorden)
         }
         .sheet(isPresented: $isWoordEditorPresented) {
             WoordEditor(woord: nil)
@@ -45,52 +102,31 @@ private struct WoordLijst: View {
         .sheet(isPresented: $isVoortgangSheetPresented) {
             LijstVoortgangView(lijst: lijst)
         }
-        .overlay {
-            if lijst.woorden.isEmpty {
-                ContentUnavailableView {
-                    Label("Geen Woorden in deze lijst", systemImage: "pawprint")
-                } description: {
-                    AddWoordButton(isActive: $isWoordEditorPresented)
+        .navigationTitle("") // Hide default navigation title
+        .navigationBarBackButtonHidden(true) // Hide the default back button
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                // Custom back button with chevron
+                Button(action: {
+                    dismiss() // Manually dismiss or go back
+                }) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.white)
                 }
             }
-        }
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                AddWoordButton(isActive: $isWoordEditorPresented)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                BewerkLijstButton(isActive: $isLijstEditorPresented)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                StatistiekenButton(isActive: $isVoortgangSheetPresented)
-            }
-        }
-        .padding()
-        .navigationTitle(lijst.naam)
-        
-        Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
-            .font(.subheadline)
-    }
-
-    private func verwijderWoorden(at indexSet: IndexSet) {
-        for index in indexSet {
-            let woordToDelete = lijst.woorden[index]
-            if navigationContext.selectedWoord?.persistentModelID == woordToDelete.persistentModelID {
-                navigationContext.selectedWoord = nil
-            }
-            lijst.woorden.remove(at: index)
         }
     }
 }
 
+// Toolbar buttons
 private struct AddWoordButton: View {
     @Binding var isActive: Bool
-    
+
     var body: some View {
         Button {
             isActive = true
         } label: {
-            Label("voeg een woord toe", systemImage: "plus")
+            Label("", systemImage: "plus")
                 .help("Voeg woord toe")
         }
     }
@@ -98,26 +134,24 @@ private struct AddWoordButton: View {
 
 private struct BewerkLijstButton: View {
     @Binding var isActive: Bool
-    
+
     var body: some View {
         Button {
             isActive = true
         } label: {
-            Label("Bewerk lijst", systemImage: "pencil")
-                .help("Bewerk de huidige lijst")
+            Image(systemName: "pencil")
         }
     }
 }
 
 private struct StatistiekenButton: View {
     @Binding var isActive: Bool
-    
+
     var body: some View {
         Button {
             isActive = true
         } label: {
-            Label("Voortgang", systemImage: "chart.bar")
-                .help("Bekijk de voortgang van de lijst")
+            Image(systemName: "chart.bar")
         }
     }
 }
@@ -131,12 +165,14 @@ private struct LijstVoortgangView: View {
             Text("Voortgang van de lijst \(lijst.naam)")
                 .font(.title)
                 .padding()
-            Text("Aantal woorden: \(lijst.woorden.count)")
+
+            Text("Aantal resterende woorden: \(lijst.woorden.count)")
                 .font(.headline)
-            // Voeg hier meer statistieken toe, zoals 'geleerde woorden' als die functie bestaat
+
             Spacer()
+
             Button("Sluiten") {
-                dismiss() // Dit sluit de sheet
+                dismiss()
             }
             .padding()
         }

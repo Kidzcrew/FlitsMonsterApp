@@ -9,18 +9,18 @@ import Foundation
 import SwiftData
 
 extension Lijst {
-    static let lijstM3 = Lijst(naam: "lijst groep 3 Start", beschrijving: "Lijst voor groep 3", niveau: .M3)
-    static let lijstM4 = Lijst(naam: "lijst groep 4", beschrijving: "Lijst voor groep 4", niveau: .M4)
-    static let lijstM5 = Lijst(naam: "lijst groep 5", beschrijving: "Lijst voor groep 5", niveau: .M5)
-    static let lijstM6 = Lijst(naam: "lijst groep 6", beschrijving: "Lijst voor groep 6", niveau: .M6)
-    static let lijstM7 = Lijst(naam: "lijst groep 7", beschrijving: "Lijst voor groep 7", niveau: .M7)
-    static let lijst8plus = Lijst(naam: "lijst groep 8", beschrijving: "Lijst voor groep 8", niveau: .eightPlus)
-    static let lijstE3 = Lijst(naam: "lijst groep 3 Eind", beschrijving: "Eindlijst voor groep 3", niveau: .E3)
-    static let lijstE4 = Lijst(naam: "lijst groep 4 Eind", beschrijving: "Eindlijst voor groep 4", niveau: .E4)
-    static let lijstE5 = Lijst(naam: "lijst groep 5 Eind", beschrijving: "Eindlijst voor groep 5", niveau: .E5)
-    static let lijstE6 = Lijst(naam: "lijst groep 6 Eind", beschrijving: "Eindlijst voor groep 6", niveau: .E6)
-    static let lijstE7 = Lijst(naam: "lijst groep 7 Eind", beschrijving: "Eindlijst voor groep 7", niveau: .E7)
-    static let eigenlijst = Lijst(naam: "eigen lijst", beschrijving: "niveau niet bepaald", niveau: .eigen)
+    static let lijstM3 = Lijst(naam: "lijst groep 3 Start", beschrijving: "Lijst voor groep 3", niveau: .M3, icoon: "monster1")
+    static let lijstM4 = Lijst(naam: "lijst groep 4", beschrijving: "Lijst voor groep 4", niveau: .M4, icoon: "monster1")
+    static let lijstM5 = Lijst(naam: "lijst groep 5", beschrijving: "Lijst voor groep 5", niveau: .M5, icoon: "monster2")
+    static let lijstM6 = Lijst(naam: "lijst groep 6", beschrijving: "Lijst voor groep 6", niveau: .M6, icoon: "monster3")
+    static let lijstM7 = Lijst(naam: "lijst groep 7", beschrijving: "Lijst voor groep 7", niveau: .M7, icoon: "monster4")
+    static let lijst8plus = Lijst(naam: "lijst groep 8", beschrijving: "Lijst voor groep 8", niveau: .eightPlus, icoon: "monster5")
+    static let lijstE3 = Lijst(naam: "lijst groep 3 Eind", beschrijving: "Eindlijst voor groep 3", niveau: .E3, icoon: "monster6")
+    static let lijstE4 = Lijst(naam: "lijst groep 4 Eind", beschrijving: "Eindlijst voor groep 4", niveau: .E4, icoon: "monster7")
+    static let lijstE5 = Lijst(naam: "lijst groep 5 Eind", beschrijving: "Eindlijst voor groep 5", niveau: .E5, icoon: "monster8")
+    static let lijstE6 = Lijst(naam: "lijst groep 6 Eind", beschrijving: "Eindlijst voor groep 6", niveau: .E6, icoon: "monster9")
+    static let lijstE7 = Lijst(naam: "lijst groep 7 Eind", beschrijving: "Eindlijst voor groep 7", niveau: .E7, icoon: "monster10")
+    static let eigenlijst = Lijst(naam: "eigen lijst", beschrijving: "niveau niet bepaald", niveau: .eigen, icoon: "monster11")
 
     static func insertSampleData(modelContext: ModelContext) {
         // Voeg de Lijst categorieën toe aan de modelcontext.
