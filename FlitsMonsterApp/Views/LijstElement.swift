@@ -1,12 +1,13 @@
-/* import SwiftUI
+import SwiftUI
+import SwiftData
 
 struct LijstElement: View {
     @State private var isExpanded: Bool = false
-    var lijst: Lijst // Ontvang het volledige Lijst-object
+    @Bindable var lijst: Lijst // Ontvang het volledige Lijst-object
 
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
+            ZStack(alignment: .topLeading) {
                 UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10, topTrailing: 10))
                     .frame(height: 110.0)
                     .foregroundStyle(
@@ -20,9 +21,10 @@ struct LijstElement: View {
                 HStack {
                     Image(lijst.icoon)
                         .resizable()
-                        .padding(.horizontal, 10)
                         .scaledToFit()
-                        .frame(width: 100)
+                        .frame(width: 100, height: 100)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 10)
 
                     VStack(alignment: .leading) {
                         Text(lijst.naam)
@@ -35,7 +37,7 @@ struct LijstElement: View {
                     }
                     Spacer()
 
-                    // Correcte aanroep naar WoordenLijstView met een Lijst-object
+                    // Chevron voor WoordenLijstView
                     NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
                         Image(systemName: "chevron.right")
                             .resizable()
@@ -46,13 +48,37 @@ struct LijstElement: View {
                     .padding(.trailing, 10)
                 }
                 .padding([.leading, .trailing], 10)
+
+                // Het hartje linksboven
+                Button(action: {
+                    // Toggle de favorietenstatus en sla de wijziging op
+                    lijst.isFavoriet.toggle()
+                    saveFavorietStatus()
+                }) {
+                    Image(systemName: lijst.isFavoriet ? "heart.fill" : "heart")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(lijst.isFavoriet ? .red : .white) // Rood als het een favoriet is, anders wit
+                        .padding(8)
+                }
+                .background(Color.white.opacity(0.6))
+                .cornerRadius(20)
+                .padding(.leading, 10)
+                .padding(.top, 10)
             }
             .frame(maxWidth: 400)
 
-            ProgressView(value: Double(lijst.voortgang) / 100.0)
-                .progressViewStyle(LinearProgressViewStyle(tint: .green))
-                .frame(maxWidth: 400, maxHeight: 3)
-                .padding(.vertical, -4)
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.blue)
+                    .frame(height: 3)
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Color.green)
+                    .frame(width: CGFloat(lijst.voortgang) * 4, height: 3)
+            }
+            .frame(maxWidth: 400)
+            .padding(.vertical, -4)
 
             ZStack {
                 UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10))
@@ -70,9 +96,19 @@ struct LijstElement: View {
                                 .foregroundStyle(.gray)
                                 .font(.footnote)
                                 .bold()
-                            Text(lijst.woorden.map { $0.naam }.joined(separator: ", "))
-                                .foregroundStyle(.gray)
-                                .font(.footnote)
+
+                            if lijst.woorden.count < 10 {
+                                Text(lijst.woorden.map { $0.naam }.joined(separator: ", "))
+                                    .foregroundStyle(.gray)
+                                    .font(.footnote)
+                            } else {
+                                let eersteVijf = lijst.woorden.prefix(5).map { $0.naam }.joined(separator: ", ")
+                                let laatsteVijf = lijst.woorden.suffix(5).map { $0.naam }.joined(separator: ", ")
+                                Text("\(eersteVijf) ... \(laatsteVijf)")
+                                    .foregroundStyle(.gray)
+                                    .font(.footnote)
+                            }
+
                             Spacer()
                             Text("\(lijst.woorden.count) Woorden")
                                 .foregroundStyle(.purple)
@@ -86,25 +122,6 @@ struct LijstElement: View {
                             .opacity(0.5)
 
                         HStack {
-                            Button(action: {
-                                print("Favoriet aangeraakt")
-                            }) {
-                                Image(systemName: "heart.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.gray)
-                                    .opacity(0.2)
-                            }
-                            Button(action: {
-                                print("Bewerken aangeraakt")
-                            }) {
-                                Image(systemName: "pencil")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.blue)
-                            }
                             Button(action: {
                                 print("Statistieken aangeraakt")
                             }) {
@@ -127,22 +144,12 @@ struct LijstElement: View {
                                     .foregroundStyle(.gray)
                             }
                             Spacer()
-                            Text("Geoefend: 17x")
+                            Text("Geoefend: \(lijst.voortgang) keer")
                                 .foregroundStyle(.blue)
                                 .font(.subheadline)
                         }
                     } else {
                         HStack {
-                            Button(action: {
-                                print("Favoriet aangeraakt")
-                            }) {
-                                Image(systemName: "heart.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.gray)
-                                    .opacity(0.2)
-                            }
                             Spacer()
                             Button(action: {
                                 withAnimation {
@@ -157,7 +164,7 @@ struct LijstElement: View {
                             }
                             .padding(.trailing, 80)
 
-                            Text("Geoefend: 17x")
+                            Text("Geoefend: \(lijst.voortgang) keer")
                                 .foregroundStyle(.blue)
                                 .font(.subheadline)
                         }
@@ -170,6 +177,15 @@ struct LijstElement: View {
         }
         .padding(.horizontal, 10)
     }
+
+    // Functie om de favorietenstatus op te slaan
+    private func saveFavorietStatus() {
+        do {
+            try lijst.modelContext?.save()
+        } catch {
+            print("Fout bij het opslaan van de favorietenstatus: \(error)")
+        }
+    }
 }
 
 #Preview {
@@ -180,8 +196,7 @@ struct LijstElement: View {
             niveau: .M3,
             kleurPrimair: "#FF512F",
             kleurSecundair: "#1BFFFF",
-            icoon: "star"
+            icoon: "monster1"
         )
     )
 }
-*/

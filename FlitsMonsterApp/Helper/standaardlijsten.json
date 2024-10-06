@@ -4,38 +4,86 @@
         "naam": "Eten en drinken",
         "beschrijving": "korte woorden - 1 lettergreep",
         "woorden": ["peen", "kok", "kook", "druif", "sap", "ei", "prei", "soep", "fruit", "snoep", "smul", "koek", "reep", "sla", "slok", "fles", "pan", "pak", "mok", "ijs", "kaas", "wijn", "melk", "boon", "voer", "brood", "bord", "drop", "bes", "peer", "braam", "kers", "noot"],
-        "icoon":"monster15"
+        "icoon": "monster15",
+        "kleurPrimair": "#2E3192",
+        "kleurSecundair": "#1BFFFF"
     },
     {
         "niveau": "E3",
         "naam": "Beestenboel",
         "beschrijving": "korte woorden - 1 lettergreep",
         "woorden": ["vis", "poes", "koe", "bok", "tor", "mees", "kip", "uil", "aap", "pauw", "klauw", "vee", "voer", "zoem", "bij", "rups", "poot", "teen", "kop", "muis", "rat", "gier", "slak", "hert", "ree", "gans", "kwal", "zalm", "haas", "vos", "wolf", "rund", "spin", "fret", "gnoe", "pad", "duif", "hoen", "stier", "reu", "beer", "lam", "pup", "riem", "rui", "raaf", "zwijn", "mier", "rog", "hok", "hap", "baars"],
-        "icoon":"beestenboel"
+        "icoon": "beestenboel",
+        "kleurPrimair": "#614385",
+        "kleurSecundair": "#516395"
     },
-    
     {
         "niveau": "M3",
-        "naam": "in huis",
+        "naam": "In huis",
         "beschrijving": "korte woorden - 1 lettergreep",
         "woorden": ["pen", "pot", "sok", "brief", "trui", "fles", "deur", "kast", "broek", "vork", "mes", "stoel", "la", "pop", "dop", "spel", "lamp", "kaars", "bak", "kom", "bord", "bel", "pil", "doek", "haak", "kraan", "krat", "rek", "mand", "krat", "kleed", "bloem", "mat", "vaas", "kist", "bad", "raam", "broek", "poep", "plas", "plee", "slaap", "sloop", "slip", "post", "vloer", "slot", "hal", "gum", "vlek", "glas", "bank"],
-        "icoon":"monster8"
+        "icoon": "monster8",
+        "kleurPrimair": "#4E65FF",
+        "kleurSecundair": "#92EFFD"
     },
-    
     {
         "niveau": "E3",
-        "naam": "buiten",
+        "naam": "Buiten",
         "beschrijving": "korte woorden met dingen buiten",
         "woorden": ["zon", "boot", "dak", "maan", "man", "roos", "bloem", "huis", "stoep", "zon", "bal", "wei", "fiets", "beuk", "berk", "eik", "boom", "weg", "stad", "dorp", "kar", "gras", "blad", "tak", "groen", "geel", "rood", "weer", "wolk", "speel"],
-        "icoon": "monsterbuiten"
+        "icoon": "monsterbuiten",
+        "kleurPrimair": "#02AABD",
+        "kleurSecundair": "#00CDAC"
+    },
+    {
+        "niveau": "M4",
+        "naam": "Inkomertjes",
+        "beschrijving": "korte woorden om er lekker in te komen",
+        "woorden": ["bil", "hut", "boom", "krop", "hol", "voor", "duif", "hun", "bleek", "week", "fel", "wet", "nek", "teer", "rouw", "fit", "ik", "boer", "bel", "voer", "weer", "muur", "goor", "koek", "bal", "tak", "mug", "geur", "met", "juf", "poot", "muis", "oor", "knop", "roem", "ruim", "keur", "bol", "pot", "pop", "tas", "por", "keek", "peer", "kop", "bijl", "boef", "deur", "dief", "mouw", "toer", "duim", "touw", "vies", "riet", "vier", "weg", "wel", "heer", "vijf", "roer", "tiet", "doek", "leer", "bier", "zeer", "leek", "beur", "drie", "twee", "zes", "koe", "rijp", "kous", "lift", "paas", "slaap", "sloop", "doos", "plan", "traag", "proef", "troon", "vaar", "prik", "slap", "meest", "boon", "keer", "zeg", "dor", "arm", "turf", "vlerk", "staat", "stronk", "boot", "lamp", "munt", "plas", "pak", "dop", "park", "vast", "warm", "vaas", "harp", "pret", "saus", "bot", "doof", "boos", "kas", "vorm", "vlas", "hap", "heks", "boor", "durf", "blik", "door", "drom", "kleine", "kans", "kern", "prak", "juist", "voorn", "trap", "dof", "bok", "mes", "frons", "vaat", "start", "strak", "vroeg", "mens", "kleuter", "dor", "vat", "park", "zorg", "worm", "stak", "grap", "groep", "vleet", "bont"],
+        "icoon": "monster2",
+        "kleurPrimair": "#11998E",
+        "kleurSecundair": "#38EF7D"
     },
     
     {
         "niveau": "M4",
-        "naam": "inkomertjes",
-        "beschrijving": "korte woorden om er lekker in te komen",
-        "woorden": ["bil", "hut", "boom", "krop", "hol", "voor", "duif", "hun", "bleek", "week", "fel", "wet", "nek", "teer", "rouw", "fit", "ik", "boer", "bel", "voer", "weer", "muur", "goor", "koek", "bal", "tak", "mug", "geur", "met", "juf", "poot", "muis", "oor", "knop", "roem", "ruim", "keur", "bol", "pot", "pop", "tas", "por", "keek", "peer", "kop", "bijl", "boef", "deur", "dief", "mouw", "toer", "duim", "touw", "vies", "riet", "vier", "weg", "wel", "heer", "vijf", "roer", "tiet", "doek", "leer", "bier", "zeer", "leek", "beur", "drie", "twee", "zes", "koe", "rijp", "kous", "lift", "paas", "slaap", "sloop", "doos", "plan", "traag", "proef", "troon", "vaar", "prik", "slap", "meest", "boon", "keer", "zeg", "dor", "arm", "turf", "vlerk", "staat", "stronk", "boot", "lamp", "munt", "plas", "pak", "dop", "park", "vast", "warm", "vaas", "harp", "pret", "saus", "bot", "doof", "boos", "kas", "vorm", "vlas", "hap", "heks", "boor", "durf", "blik", "door", "drom", "kleine", "kans", "kern", "prak", "juist", "voorn", "trap", "dof", "bok", "mes", "frons", "vaat", "start", "strak", "vroeg", "mens", "kleuter", "dor", "vat", "park", "zorg", "worm", "stak", "grap", "groep", "vleet", "bont"],
-        "icoon": "monster2"
+        "naam": "kort maar krachtig",
+        "beschrijving": "meer woorden met 1 lettergreep",
+        "woorden": [
+            "kast", "slurf", "plas", "straat", "oogst", "half", "vorm", "nooit", "hooi", "vuist", "sproei", "feest", "zalm", "vraag", "doorn", "fors", "schelp", "prent", "kraai", "arts", "flink",
+            "stuk", "vals", "brug", "saai", "warm", "schrik", "helm", "dwerg", "vlot", "vlaag", "stam", "scherp", "strak", "vlieg", "groei", "mest", "film", "stroom", "schroef", "vlees",
+            "storm", "scherm", "winst", "struik", "stroom", "dienst", "fluit", "vaart", "liefst", "vroeg", "streek", "harp", "spreek", "fles", "schets", "dorst", "balk", "vlag", "zweep",
+            "vorst", "straks", "dooi", "tulp", "straks", "worst", "zwart", "fijn", "straf", "park", "fruit", "vloer", "schrift", "klauw", "schuin", "zelfs", "taai", "blik", "beurt", "streng",
+            "gang", "pink", "nieuws", "zwaar", "stop", "angst", "je", "knal", "kruip", "kruik", "kruis", "kruk", "nieuw", "kunst", "klank", "tocht", "pech", "eind", "langs", "broek", "krans",
+            "bron", "glas", "knie", "greep", "sport", "zalf", "fraai", "wist", "plaats", "gauw", "schoon", "knoop", "schuw", "klap", "kieuw", "sein", "kloek", "puur", "eerst", "eer", "komst",
+            "ruw", "klok", "sneeuw", "zeer", "stuur", "duw", "breuk", "honger", "slaap", "kleur", "sprong", "buurt", "links", "drank", "tante", "schuur", "grens", "bruin", "knop", "glans",
+            "staart", "spoor", "groen", "fiets", "leeuw", "meeuw"
+        ],
+        "icoon": "monster3",
+        "kleurPrimair": "#BFF098",
+        "kleurSecundair": "#6FD6FF"
+    },
+    {
+        "niveau": "M4",
+        "naam": "pittige korte woorden",
+        "beschrijving": "nog meer woorden met 1 lettergreep",
+        "woorden": [
+            "blauw", "paus", "dicht", "grens", "toch", "staart", "pret", "au", "glas", "gaas", "zicht", "munt", "winkel",
+            "boer", "haast", "pauw", "nicht", "broers", "gauw", "broer", "lap", "slecht", "kust", "mens", "nauw", "kus",
+            "sein", "kans", "lift", "bocht", "leeft", "mes", "start", "vuist", "sport", "spot", "kan", "vocht", "bloem",
+            "knoop", "klok", "knop", "gas", "lam", "ruist", "koop", "mist", "star", "mits", "wesp", "heks", "plaats", "haat",
+            "prent", "haas", "trap", "klos", "kok", "plaat", "tap", "mint", "hees", "kop", "broer", "rap", "lamp", "juist",
+            "kaas", "raap", "kwart", "wat", "rits", "rit", "hek", "sport", "brief", "krans", "kroes", "schat", "storm",
+            "strop", "stroop", "strak", "moest", "spreuk", "koers", "storm", "schaal", "wals", "steil", "dweil", "klein",
+            "kei", "strek", "braaf", "spraak", "scheur", "spriet", "stip", "sprak", "schep", "schroef", "schaak", "strijk",
+            "wast", "strik", "lief", "boot", "groep", "schaaf", "schrik", "schaaf", "fiets", "minst", "sterk", "voor",
+            "staak", "schaap", "saus", "stom", "rits", "stroom", "groen", "strik", "walst", "spruit", "gans", "wesp", "stop",
+            "schram", "schel", "bont", "vloog", "mest", "spreek", "dor", "dikst", "strip", "groef", "schrok", "schaats",
+            "stroef", "brei", "glans", "stoom", "liefst", "vorst", "vlug", "stak"
+        ],
+        "icoon": "monster4",
+        "kleurPrimair": "#FF5F6D",
+        "kleurSecundair": "#FFC371"
     }
-    
 ]
+

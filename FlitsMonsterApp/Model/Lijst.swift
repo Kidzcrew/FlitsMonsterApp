@@ -12,11 +12,12 @@ final class Lijst {
     var kleurPrimair: String = "#FFFFFF" // Standaard primaire kleur (wit)
     var kleurSecundair: String = "#000000" // Standaard secundaire kleur (zwart)
     var icoon: String = "star" // Standaard icoon (ster)
+    var isFavoriet: Bool
 
-    @Relationship(deleteRule: .cascade, inverse: \Woord.lijst)
-    var woorden = [Woord]()
+    @Relationship(deleteRule: .cascade, inverse: \Woord.lijsten)
+    var woorden: [Woord]
     
-    init(naam: String, beschrijving: String = "", niveau: Niveau? = nil, voortgang: Int = 0, kleurPrimair: String = "#FFFFFF", kleurSecundair: String = "#000000", icoon: String = "star") {
+    init(naam: String, beschrijving: String = "", niveau: Niveau? = nil, voortgang: Int = 0, kleurPrimair: String = "#FFFFFF", kleurSecundair: String = "#000000", icoon: String = "monster1", isFavoriet: Bool = false, woorden: [Woord] = []) {
         self.naam = naam
         self.beschrijving = beschrijving
         self.niveau = niveau
@@ -24,6 +25,8 @@ final class Lijst {
         self.kleurPrimair = kleurPrimair
         self.kleurSecundair = kleurSecundair
         self.icoon = icoon
+        self.isFavoriet = false
+        self.woorden = woorden
     }
 }
 

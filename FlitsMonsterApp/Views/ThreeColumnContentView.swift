@@ -15,14 +15,15 @@ struct ThreeColumnContentView: View {
             // Content weergave voor geselecteerde lijst
             if let selectedLijst = navigationContext.selectedLijst {
                 WoordenLijstView(lijst: selectedLijst)
-                   /* .navigationTitle(selectedLijst.naam)*/
             } else {
                 Text("Selecteer een lijst")
             }
         } detail: {
             // Detailweergave voor geselecteerd woord
-            if let selectedWoord = navigationContext.selectedWoord {
-                WoordDetailView(woord: selectedWoord)
+            if let selectedWoord = navigationContext.selectedWoord,
+               let selectedLijst = navigationContext.selectedLijst {
+                // We unwrappen de optionele lijst en geven de binding naar de woorden door
+                WoordDetailView(woorden: .constant(selectedLijst.woorden), woord: selectedWoord) // Hier geven we de woorden als binding door
                     .navigationTitle(selectedWoord.naam)
                     .onAppear {
                         // Sluit de zijbalk en content view als een woord is geselecteerd

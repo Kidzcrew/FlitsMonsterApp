@@ -1,10 +1,3 @@
-//
-//  Woordenlijsten.swift
-//  FlitsMonsterApp
-//
-//  Created by Jeroen de Bruin on 25/09/2024.
-//
-
 import Foundation
 import SwiftData
 
@@ -36,35 +29,50 @@ extension Lijst {
         modelContext.insert(lijstE6)
         modelContext.insert(lijstE7)
         
+        // Maak de woorden aan met bijbehorende lijsten.
+        let aap = Woord(naam: "aap", soort: .hoorman, lijsten: [lijstM3])
+        let noot = Woord(naam: "noot", soort: .letterzetter, lijsten: [lijstE3])
+        let mies = Woord(naam: "mies", soort: .letterdief, lijsten: [lijstM4])
+        let manden = Woord(naam: "manden", soort: .hoorman, lijsten: [lijstE4])
+        let ballen = Woord(naam: "ballen", soort: .letterzetter, lijsten: [lijstE5])
+        let balen = Woord(naam: "balen", soort: .letterdief, lijsten: [lijstM5])
+        let fietsje = Woord(naam: "fietsje", soort: .hoorman, lijsten: [lijstM6])
+        let gapen = Woord(naam: "gapen", soort: .letterdief, lijsten: [lijstE6])
+        let weken = Woord(naam: "weken", soort: .letterdief, lijsten: [lijstM7])
+        let wekken = Woord(naam: "wekken", soort: .letterzetter, lijsten: [lijstE7])
+        let werken = Woord(naam: "werken", soort: .hoorman, lijsten: [lijst8plus])
+        let kip = Woord(naam: "kip", soort: .hoorman, lijsten: [lijstE3])
+        let gebakken = Woord(naam: "gebakken", soort: .letterzetter, lijsten: [lijstE4])
+
         // Voeg de woorden toe aan de modelcontext.
-        modelContext.insert(Woord.aap)
-        modelContext.insert(Woord.noot)
-        modelContext.insert(Woord.mies)
-        modelContext.insert(Woord.manden)
-        modelContext.insert(Woord.ballen)
-        modelContext.insert(Woord.balen)
-        modelContext.insert(Woord.fietsje)
-        modelContext.insert(Woord.gebakken)
-        modelContext.insert(Woord.gapen)
-        modelContext.insert(Woord.weken)
-        modelContext.insert(Woord.wekken)
-        modelContext.insert(Woord.werken)
-        modelContext.insert(Woord.kip)
-        
-        // Koppel de woorden aan de juiste lijst.
-        Woord.aap.lijst = lijstM3
-        Woord.noot.lijst = lijstE3
-        Woord.mies.lijst = lijstM4
-        Woord.manden.lijst = lijstE4
-        Woord.balen.lijst = lijstM5
-        Woord.ballen.lijst = lijstE5
-        Woord.fietsje.lijst = lijstM6
-        Woord.gapen.lijst = lijstE6
-        Woord.weken.lijst = lijstM7
-        Woord.wekken.lijst = lijstE7
-        Woord.werken.lijst = lijst8plus
-        Woord.kip.lijst = lijstE3
-        Woord.gebakken.lijst = lijstE4
+        modelContext.insert(aap)
+        modelContext.insert(noot)
+        modelContext.insert(mies)
+        modelContext.insert(manden)
+        modelContext.insert(ballen)
+        modelContext.insert(balen)
+        modelContext.insert(fietsje)
+        modelContext.insert(gapen)
+        modelContext.insert(weken)
+        modelContext.insert(wekken)
+        modelContext.insert(werken)
+        modelContext.insert(kip)
+        modelContext.insert(gebakken)
+
+        // Koppel de woorden aan de juiste lijsten door ze aan beide zijden toe te voegen.
+        lijstM3.woorden.append(aap)
+        lijstE3.woorden.append(noot)
+        lijstM4.woorden.append(mies)
+        lijstE4.woorden.append(manden)
+        lijstE5.woorden.append(ballen)
+        lijstM5.woorden.append(balen)
+        lijstM6.woorden.append(fietsje)
+        lijstE6.woorden.append(gapen)
+        lijstM7.woorden.append(weken)
+        lijstE7.woorden.append(wekken)
+        lijst8plus.woorden.append(werken)
+        lijstE3.woorden.append(kip)
+        lijstE4.woorden.append(gebakken)
     }
     
     static func reloadSampleData(modelContext: ModelContext) {

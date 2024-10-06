@@ -2,19 +2,15 @@ import SwiftUI
 import SwiftData
 
 struct WoordenLijstView: View {
-    let lijst: Lijst?
+    let lijst: Lijst
 
     var body: some View {
-        if let lijst = lijst {
-            WoordLijst(lijst: lijst)
-        } else {
-            ContentUnavailableView("Select a category", systemImage: "sidebar.left")
-        }
+        WoordLijst(lijst: lijst)
     }
 }
 
 private struct WoordLijst: View {
-    let lijst: Lijst
+    @Bindable var lijst: Lijst
     @Environment(NavigationContext.self) private var navigationContext
     @Environment(\.dismiss) private var dismiss // For manual back navigation
     @State private var isWoordEditorPresented = false
@@ -60,11 +56,10 @@ private struct WoordLijst: View {
                                 AddWoordButton(isActive: $isWoordEditorPresented)
                             }
                             .padding(10)
-                           // .background(Color(UIColor.systemGray5))
                         }
                         .background(
-                            RoundedRectangle(cornerRadius: 10) // Afgeronde hoeken
-                                .fill(Color(UIColor.systemGray5)) // Achtergrondkleur
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color(UIColor.systemGray5))
                         )
 
                         Text(lijst.naam)
@@ -77,14 +72,13 @@ private struct WoordLijst: View {
                     }
                     .padding([.leading, .trailing])
 
-
                     // Woordenlijst
                     List {
                         Text("Woorden:")
                             .font(.headline)
 
-                        ForEach(lijst.woorden) { woord in
-                            NavigationLink(destination: WoordDetailView(woord: woord)) {
+                        ForEach($lijst.woorden) { $woord in
+                            NavigationLink(destination: WoordDetailView(woorden: $lijst.woorden, woord: woord)) {
                                 Text(woord.naam)
                             }
                         }
@@ -94,7 +88,8 @@ private struct WoordLijst: View {
             }
         }
         .sheet(isPresented: $isWoordEditorPresented) {
-            WoordEditor(woord: nil)
+            // Gebruik de binding voor de woorden en lijst in WoordEditor
+            WoordEditor(woord: nil, lijst: lijst, woorden: $lijst.woorden)
         }
         .sheet(isPresented: $isLijstEditorPresented) {
             LijstEditor(lijst: lijst)
@@ -191,6 +186,6 @@ private struct LijstVoortgangView: View {
 
 #Preview("geen lijst geselecteerd") {
     ModelContainerPreview(ModelContainer.sample) {
-        WoordenLijstView(lijst: nil)
+        WoordenLijstView(lijst: Lijst.lijstE3)
     }
 }

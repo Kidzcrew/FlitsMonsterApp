@@ -26,20 +26,29 @@ func voegStandaardLijstenToeVanuitJSON(context: ModelContext) {
                 print("Ongeldig niveau voor lijst: \(lijstInfo.naam)")
                 continue
             }
+            
             let nieuweLijst = Lijst(naam: lijstInfo.naam, beschrijving: lijstInfo.beschrijving, niveau: niveau, icoon: lijstInfo.icoon)
             context.insert(nieuweLijst)
             
             // Voeg de woorden toe aan de nieuwe lijst
             for woordNaam in lijstInfo.woorden {
                 let bestaandeWoorden = try! context.fetch(FetchDescriptor<Woord>(predicate: #Predicate {
-                    $0.naam == woordNaam && ($0.lijst?.naam ?? "") == lijstInfo.naam
+                    $0.naam == woordNaam
                 }))
                 
+                let nieuwWoord: Woord
                 if bestaandeWoorden.isEmpty {
-                    let nieuwWoord = Woord(naam: woordNaam, soort: .hoorman)  // Pas het soort aan indien nodig
-                    nieuwWoord.lijst = nieuweLijst
+                    // Maak een nieuw woord en koppel het aan de lijst
+                    nieuwWoord = Woord(naam: woordNaam, soort: .hoorman, lijsten: [nieuweLijst])
                     context.insert(nieuwWoord)
+                } else {
+                    // Het woord bestaat al, voeg de lijst toe aan de lijsten van het bestaande woord
+                    nieuwWoord = bestaandeWoorden.first!
+                    nieuwWoord.lijsten.append(nieuweLijst)
                 }
+                
+                // Voeg het woord toe aan de lijst
+                nieuweLijst.woorden.append(nieuwWoord)
             }
         } else {
             print("Lijst '\(lijstInfo.naam)' bestaat al.")

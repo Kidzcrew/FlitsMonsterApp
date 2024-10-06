@@ -12,11 +12,12 @@ import SwiftData
 final class Woord {
     var naam: String
     var soort: Soort
-    var lijst: Lijst?
+    var lijsten: [Lijst]
     
-    init(naam: String, soort: Soort) {
+    init(naam: String, soort: Soort, lijsten: [Lijst]) {
         self.naam = naam
         self.soort = soort
+        self.lijsten = lijsten
     }
 }
 
