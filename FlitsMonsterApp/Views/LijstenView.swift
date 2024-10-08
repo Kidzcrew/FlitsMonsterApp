@@ -6,7 +6,8 @@ struct LijstenView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Lijst.naam) private var woordLijsten: [Lijst]
     @State private var isReloadPresented = false
-    @State private var geselecteerdeGroep: String = AppSettings.getGeselecteerdeGroep() // Haal geselecteerde groep op
+    @AppStorage(AppSettings.standaardGroepKey) private var geselecteerdeGroep: String = AppSettings.standaardGroep
+
 
     let alleGroepen = ["Alle lijsten", "Groep 3", "Groep 4", "Groep 5", "Groep 6", "Groep 7", "Groep 8"]
 
@@ -27,7 +28,6 @@ struct LijstenView: View {
                     ForEach(alleGroepen, id: \.self) { groep in
                         Button(groep) {
                             geselecteerdeGroep = groep
-                            AppSettings.setGeselecteerdeGroep(groep) // Sla geselecteerde groep op
                             print("Geselecteerde groep: \(groep)") // Print de geselecteerde groep
                         }
                     }

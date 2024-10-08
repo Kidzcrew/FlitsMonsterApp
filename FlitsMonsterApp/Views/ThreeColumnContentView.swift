@@ -33,7 +33,7 @@ struct ThreeColumnContentView: View {
                 Text("Selecteer een woord")
             }
         }
-        .onChange(of: navigationContext.selectedWoord) { _ in
+        .onChange(of: navigationContext.selectedWoord) { 
             // Elke keer als een nieuw woord wordt geselecteerd, verberg de zijbalk en content view
             if navigationContext.selectedWoord != nil {
                 navigationContext.columnVisibility = .detailOnly

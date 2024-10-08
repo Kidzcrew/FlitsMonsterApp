@@ -3,37 +3,63 @@ import SwiftData
 
 struct ContentView: View {
     @State private var navigationContext = NavigationContext()
-    @Environment(\.modelContext) private var modelContext  // Haal de modelContext op uit de omgeving
+    @Environment(\.modelContext) private var modelContext  // Fetch modelContext from environment
     
     var body: some View {
-        ThreeColumnContentView()
-            .environment(navigationContext)
-            .onAppear {
-                // Voer de migratie uit zodra de view verschijnt
-                migrateDataIfNeeded(context: modelContext)
-                // Voeg standaardlijsten toe vanuit JSON
-                voegStandaardLijstenToeVanuitJSON(context: modelContext)
-            }
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+            
+            ThreeColumnContentView()
+                .tabItem {
+                    Label("Lijsten", systemImage: "list.bullet")
+                }
+                .environment(navigationContext)  // Pass navigation context to LijstenView
+            
+            NewsView()  // Assume you have a view for news articles
+                .tabItem {
+                    Label("News", systemImage: "newspaper.fill")
+                }
+            
+            InstellingenView() // Assume you have a settings view
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+        }
+        .onAppear {
+            migrateDataIfNeeded(context: modelContext)
+            voegStandaardLijstenToeVanuitJSON(context: modelContext)
+        }
     }
 
-    // Migratiefunctie om ontbrekende niveau's toe te voegen
     func migrateDataIfNeeded(context: ModelContext) {
-        // Fetch alle Lijst-objecten via SwiftData
         let lijsten = try! context.fetch(FetchDescriptor<Lijst>())
-        
-         for lijst in lijsten {
+        for lijst in lijsten {
             if lijst.niveau == .S {
-                lijst.niveau = .S  // Standaardwaarde voor lijsten die geen niveau hebben
+                lijst.niveau = .S  // Default value for lists with no level
             }
         }
-        
-        // Sla de wijzigingen op
         do {
             try context.save()
         } catch {
-            print("Fout tijdens het opslaan van gemigreerde data: \(error)")
+            print("Error saving migrated data: \(error)")
         }
+    }
+}
 
+// Placeholder Views for News and Settings
+struct NewsView: View {
+    var body: some View {
+        Text("News Articles")
+    }
+}
+
+
+struct HomeView: View {
+    var body: some View {
+        Text("Home")
     }
 }
 
