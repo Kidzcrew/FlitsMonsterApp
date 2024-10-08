@@ -1,13 +1,12 @@
 [
     {
-        "niveau": "E3",
+        "level": "E3",
         "naam": "Eten en drinken",
         "beschrijving": "korte woorden - 1 lettergreep",
         "woorden": ["peen", "kok", "kook", "druif", "sap", "ei", "prei", "soep", "fruit", "snoep", "smul", "koek", "reep", "sla", "slok", "fles", "pan", "pak", "mok", "ijs", "kaas", "wijn", "melk", "boon", "voer", "brood", "bord", "drop", "bes", "peer", "braam", "kers", "noot"],
         "icoon": "monster15",
         "kleurPrimair": "#2E3192",
-        "kleurSecundair": "#1BFFFF",
-        "taal": "nl"
+        "kleurSecundair": "#1BFFFF"
     },
     {
         "niveau": "E3",
@@ -16,8 +15,7 @@
         "woorden": ["vis", "poes", "koe", "bok", "tor", "mees", "kip", "uil", "aap", "pauw", "klauw", "vee", "voer", "zoem", "bij", "rups", "poot", "teen", "kop", "muis", "rat", "gier", "slak", "hert", "ree", "gans", "kwal", "zalm", "haas", "vos", "wolf", "rund", "spin", "fret", "gnoe", "pad", "duif", "hoen", "stier", "reu", "beer", "lam", "pup", "riem", "rui", "raaf", "zwijn", "mier", "rog", "hok", "hap", "baars"],
         "icoon": "beestenboel",
         "kleurPrimair": "#614385",
-        "kleurSecundair": "#516395",
-        "taal": "nl"
+        "kleurSecundair": "#516395"
     },
     {
         "niveau": "M3",
@@ -26,8 +24,7 @@
         "woorden": ["pen", "pot", "sok", "brief", "trui", "fles", "deur", "kast", "broek", "vork", "mes", "stoel", "la", "pop", "dop", "spel", "lamp", "kaars", "bak", "kom", "bord", "bel", "pil", "doek", "haak", "kraan", "krat", "rek", "mand", "krat", "kleed", "bloem", "mat", "vaas", "kist", "bad", "raam", "broek", "poep", "plas", "plee", "slaap", "sloop", "slip", "post", "vloer", "slot", "hal", "gum", "vlek", "glas", "bank"],
         "icoon": "monster8",
         "kleurPrimair": "#4E65FF",
-        "kleurSecundair": "#92EFFD",
-        "taal": "nl"
+        "kleurSecundair": "#92EFFD"
     },
     {
         "niveau": "E3",
@@ -36,8 +33,7 @@
         "woorden": ["zon", "boot", "dak", "maan", "man", "roos", "bloem", "huis", "stoep", "zon", "bal", "wei", "fiets", "beuk", "berk", "eik", "boom", "weg", "stad", "dorp", "kar", "gras", "blad", "tak", "groen", "geel", "rood", "weer", "wolk", "speel"],
         "icoon": "monsterbuiten",
         "kleurPrimair": "#02AABD",
-        "kleurSecundair": "#00CDAC",
-        "taal": "nl"
+        "kleurSecundair": "#00CDAC"
     },
     {
         "niveau": "M4",
@@ -46,9 +42,9 @@
         "woorden": ["bil", "hut", "boom", "krop", "hol", "voor", "duif", "hun", "bleek", "week", "fel", "wet", "nek", "teer", "rouw", "fit", "ik", "boer", "bel", "voer", "weer", "muur", "goor", "koek", "bal", "tak", "mug", "geur", "met", "juf", "poot", "muis", "oor", "knop", "roem", "ruim", "keur", "bol", "pot", "pop", "tas", "por", "keek", "peer", "kop", "bijl", "boef", "deur", "dief", "mouw", "toer", "duim", "touw", "vies", "riet", "vier", "weg", "wel", "heer", "vijf", "roer", "tiet", "doek", "leer", "bier", "zeer", "leek", "beur", "drie", "twee", "zes", "koe", "rijp", "kous", "lift", "paas", "slaap", "sloop", "doos", "plan", "traag", "proef", "troon", "vaar", "prik", "slap", "meest", "boon", "keer", "zeg", "dor", "arm", "turf", "vlerk", "staat", "stronk", "boot", "lamp", "munt", "plas", "pak", "dop", "park", "vast", "warm", "vaas", "harp", "pret", "saus", "bot", "doof", "boos", "kas", "vorm", "vlas", "hap", "heks", "boor", "durf", "blik", "door", "drom", "kleine", "kans", "kern", "prak", "juist", "voorn", "trap", "dof", "bok", "mes", "frons", "vaat", "start", "strak", "vroeg", "mens", "kleuter", "dor", "vat", "park", "zorg", "worm", "stak", "grap", "groep", "vleet", "bont"],
         "icoon": "monster2",
         "kleurPrimair": "#11998E",
-        "kleurSecundair": "#38EF7D",
-        "taal": "nl"
+        "kleurSecundair": "#38EF7D"
     },
+    
     {
         "niveau": "M4",
         "naam": "kort maar krachtig",
@@ -65,8 +61,7 @@
         ],
         "icoon": "monster3",
         "kleurPrimair": "#BFF098",
-        "kleurSecundair": "#6FD6FF",
-        "taal": "nl"
+        "kleurSecundair": "#6FD6FF"
     },
     {
         "niveau": "M4",
@@ -88,8 +83,7 @@
         ],
         "icoon": "monster4",
         "kleurPrimair": "#FF5F6D",
-        "kleurSecundair": "#FFC371",
-        "taal": "nl"
+        "kleurSecundair": "#FFC371"
     }
 ]
- 
+

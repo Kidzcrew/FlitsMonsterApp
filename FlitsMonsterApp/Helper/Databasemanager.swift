@@ -8,6 +8,7 @@ struct StandaardLijst: Codable {
     let beschrijving: String
     let woorden: [String]
     let icoon: String
+    let taal: String  // Voeg taal toe aan de JSON-struct
 }
 
 // Functie om de JSON-data te laden en om te zetten naar een array van StandaardLijst structs
@@ -27,7 +28,19 @@ func voegStandaardLijstenToeVanuitJSON(context: ModelContext) {
                 continue
             }
             
-            let nieuweLijst = Lijst(naam: lijstInfo.naam, beschrijving: lijstInfo.beschrijving, niveau: niveau, icoon: lijstInfo.icoon)
+            // Controleer of de taal geldig is
+            guard let lijstTaal = Lijst.Taal(rawValue: lijstInfo.taal) else {
+                print("Ongeldige taal voor lijst: \(lijstInfo.naam)")
+                continue
+            }
+            
+            let nieuweLijst = Lijst(
+                naam: lijstInfo.naam,
+                beschrijving: lijstInfo.beschrijving,
+                niveau: niveau,
+                icoon: lijstInfo.icoon,
+                taal: lijstTaal // Voeg de taal toe tijdens het initialiseren
+            )
             context.insert(nieuweLijst)
             
             // Voeg de woorden toe aan de nieuwe lijst

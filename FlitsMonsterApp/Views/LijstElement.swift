@@ -22,9 +22,9 @@ struct LijstElement: View {
                     Image(lijst.icoon)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 90, height: 90)
                         .cornerRadius(10)
-                        .padding(.horizontal, 10)
+                        .padding(10)
 
                     VStack(alignment: .leading) {
                         Text(lijst.naam)
@@ -196,7 +196,8 @@ struct LijstElement: View {
             niveau: .M3,
             kleurPrimair: "#FF512F",
             kleurSecundair: "#1BFFFF",
-            icoon: "monster1"
+            icoon: "monster1",
+            taal: .nl
         )
     )
 }

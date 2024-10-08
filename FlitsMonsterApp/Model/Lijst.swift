@@ -1,23 +1,35 @@
-import Foundation
 import SwiftData
+import Foundation
 
 @Model
 final class Lijst {
     @Attribute(.unique) var naam: String
     var beschrijving: String = "voeg beschrijving toe"
-    var niveau: Niveau? // Enum voor niveau (zoals je al hebt)
-    
-    // Nieuwe attributen toegevoegd voor de presentatie
-    var voortgang: Int = 0 // Standaard voortgang
-    var kleurPrimair: String = "#FFFFFF" // Standaard primaire kleur (wit)
-    var kleurSecundair: String = "#000000" // Standaard secundaire kleur (zwart)
-    var icoon: String = "star" // Standaard icoon (ster)
+    var niveau: Niveau? // Enum for the level (as already implemented)
+
+    // Presentation attributes
+    var voortgang: Int = 0 // Default progress
+    var kleurPrimair: String = "#FFFFFF" // Default primary color (white)
+    var kleurSecundair: String = "#000000" // Default secondary color (black)
+    var icoon: String = "star" // Default icon (star)
     var isFavoriet: Bool
+    var taal: Taal // Attribute for language distinction
 
     @Relationship(deleteRule: .cascade, inverse: \Woord.lijsten)
     var woorden: [Woord]
-    
-    init(naam: String, beschrijving: String = "", niveau: Niveau? = nil, voortgang: Int = 0, kleurPrimair: String = "#FFFFFF", kleurSecundair: String = "#000000", icoon: String = "monster1", isFavoriet: Bool = false, woorden: [Woord] = []) {
+
+    init(
+        naam: String,
+        beschrijving: String = "",
+        niveau: Niveau? = nil,
+        voortgang: Int = 0,
+        kleurPrimair: String = "#FFFFFF",
+        kleurSecundair: String = "#000000",
+        icoon: String = "monster1",
+        isFavoriet: Bool = false,
+        taal: Taal = .nl,  // Default to Dutch language
+        woorden: [Woord] = []
+    ) {
         self.naam = naam
         self.beschrijving = beschrijving
         self.niveau = niveau
@@ -25,26 +37,22 @@ final class Lijst {
         self.kleurPrimair = kleurPrimair
         self.kleurSecundair = kleurSecundair
         self.icoon = icoon
-        self.isFavoriet = false
+        self.isFavoriet = isFavoriet
         self.woorden = woorden
+        self.taal = taal // Dynamically set language
     }
 }
 
 // Enum voor niveau
 extension Lijst {
     enum Niveau: String, CaseIterable, Codable {
-        case S
-        case M3
-        case E3
-        case M4
-        case E4
-        case M5
-        case E5
-        case M6
-        case E6
-        case M7
-        case E7
-        case eightPlus = "8plus"
-        case eigen = "eigen lijst"
+        case S, M3, E3, M4, E4, M5, E5, M6, E6, M7, E7, eightPlus = "8plus", eigen = "eigen lijst"
+    }
+}
+
+// Enum voor taal
+extension Lijst {
+    enum Taal: String, CaseIterable, Codable {
+        case nl, en
     }
 }
