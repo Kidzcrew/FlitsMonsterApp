@@ -1,6 +1,19 @@
 import SwiftData
 import SwiftUI
 
+/*
+ self.naam = naam
+ self.beschrijving = beschrijving
+ self.niveau = niveau
+ self.voortgang = voortgang
+ self.kleurPrimair = kleurPrimair
+ self.kleurSecundair = kleurSecundair
+ self.icoon = icoon
+ self.isFavoriet = isFavoriet
+ self.woorden = woorden
+ self.taal = taal // Dynamically set language
+ */
+
 // Struct om de JSON-data te representeren
 struct StandaardLijst: Codable {
     let niveau: String
@@ -8,7 +21,10 @@ struct StandaardLijst: Codable {
     let beschrijving: String
     let woorden: [String]
     let icoon: String
-    let taal: String  // Voeg taal toe aan de JSON-struct
+    let kleurPrimair: String
+    let kleurSecundair: String
+    let taal: String
+    
 }
 
 // Functie om de JSON-data te laden en om te zetten naar een array van StandaardLijst structs
@@ -38,6 +54,8 @@ func voegStandaardLijstenToeVanuitJSON(context: ModelContext) {
                 naam: lijstInfo.naam,
                 beschrijving: lijstInfo.beschrijving,
                 niveau: niveau,
+                kleurPrimair: lijstInfo.kleurPrimair,
+                kleurSecundair: lijstInfo.kleurSecundair,
                 icoon: lijstInfo.icoon,
                 taal: lijstTaal // Voeg de taal toe tijdens het initialiseren
             )

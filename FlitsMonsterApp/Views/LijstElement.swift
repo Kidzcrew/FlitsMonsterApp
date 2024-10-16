@@ -8,6 +8,7 @@ struct LijstElement: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .topLeading) {
+                // Rechthoek met afgeronde bovenhoeken
                 UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10, topTrailing: 10))
                     .frame(height: 110.0)
                     .foregroundStyle(
@@ -18,57 +19,48 @@ struct LijstElement: View {
                         )
                     )
 
-                HStack {
+                HStack(spacing: 0) {
+                    // Afbeelding zonder padding aan de linkerzijde
                     Image(lijst.icoon)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 90, height: 90)
-                        .cornerRadius(10)
-                        .padding(10)
+                        .frame(width: 110, height: 110)  // Maak de hoogte gelijk aan de rechthoek
+                        .clipShape(UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10)))  // Gebruik clipShape voor afgeronde hoeken
 
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text(lijst.naam)
                             .foregroundStyle(.white)
-                            .font(.footnote)
+                            .font(.headline)
+                            .bold()
                         Text(lijst.beschrijving)
                             .foregroundStyle(.white)
-                            .bold()
+                            .font(.footnote)
+                        Text("\(lijst.woorden.count) Woorden")
+                            .foregroundStyle(.white)
                             .font(.subheadline)
+                        Text("AVI \(lijst.niveau?.rawValue ?? "Onbekend")")
+                            .foregroundStyle(.white)
+                            .font(.subheadline)
+                            .bold()
                     }
+                    .padding(.leading, 10)
+                    
                     Spacer()
 
                     // Chevron voor WoordenLijstView
-                    NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
-                        Image(systemName: "chevron.right")
+                    NavigationLink(destination: FlitsScherm(lijst: lijst)) {
+                        Image(systemName: "play.circle.fill")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(.white)
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(Color(hex: lijst.kleurPrimair))
                     }
                     .padding(.trailing, 10)
                 }
-                .padding([.leading, .trailing], 10)
-
-                // Het hartje linksboven
-                Button(action: {
-                    // Toggle de favorietenstatus en sla de wijziging op
-                    lijst.isFavoriet.toggle()
-                    saveFavorietStatus()
-                }) {
-                    Image(systemName: lijst.isFavoriet ? "heart.fill" : "heart")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundStyle(lijst.isFavoriet ? .red : .white) // Rood als het een favoriet is, anders wit
-                        .padding(8)
-                }
-                .background(Color.white.opacity(0.6))
-                .cornerRadius(20)
-                .padding(.leading, 10)
-                .padding(.top, 10)
             }
             .frame(maxWidth: 400)
 
+            // Progressbar tussen de bovenste en onderste rechthoek zonder padding
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color.blue)
@@ -78,20 +70,15 @@ struct LijstElement: View {
                     .frame(width: CGFloat(lijst.voortgang) * 4, height: 3)
             }
             .frame(maxWidth: 400)
-            .padding(.vertical, -4)
 
             ZStack {
-                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10))
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .frame(height: isExpanded ? 100.0 : 40.0)
                     .foregroundStyle(Color.white)
 
                 VStack {
                     if isExpanded {
                         HStack {
-                            Text("Niveau: \(lijst.niveau?.rawValue ?? "Onbekend")")
-                                .foregroundStyle(.purple)
-                                .font(.subheadline)
-                                .bold()
                             Text("Woorden:")
                                 .foregroundStyle(.gray)
                                 .font(.footnote)
@@ -110,10 +97,6 @@ struct LijstElement: View {
                             }
 
                             Spacer()
-                            Text("\(lijst.woorden.count) Woorden")
-                                .foregroundStyle(.purple)
-                                .font(.subheadline)
-                                .bold()
                         }
 
                         Divider()
@@ -126,6 +109,13 @@ struct LijstElement: View {
                                 print("Statistieken aangeraakt")
                             }) {
                                 Image(systemName: "chart.line.uptrend.xyaxis")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.blue)
+                            }
+                            NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
+                                Image(systemName: "eye.fill")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)

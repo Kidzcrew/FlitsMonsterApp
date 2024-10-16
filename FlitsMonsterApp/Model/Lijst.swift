@@ -2,7 +2,8 @@ import SwiftData
 import Foundation
 
 @Model
-final class Lijst {
+final class Lijst: Identifiable {
+    var id = UUID()
     @Attribute(.unique) var naam: String
     var beschrijving: String = "voeg beschrijving toe"
     var niveau: Niveau? // Enum for the level (as already implemented)

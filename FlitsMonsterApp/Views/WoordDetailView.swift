@@ -69,7 +69,7 @@ private struct WoordDetailContentView: View {
 
             List {
                 Section(header: Text("Lijsten")) {
-                    ForEach(woord.lijsten, id: \.self) { lijst in
+                    ForEach(woord.lijsten, id: \.id) { lijst in
                         HStack {
                             Text(lijst.naam)
                             Spacer()

@@ -76,6 +76,9 @@
         }
       }
     },
+    "AVI %@" : {
+
+    },
     "Bewaar" : {
       "localizations" : {
         "en" : {
@@ -161,6 +164,12 @@
           }
         }
       }
+    },
+    "Flitstijd Instellen" : {
+
+    },
+    "Flitstijd: %@" : {
+
     },
     "Fout" : {
       "localizations" : {
@@ -327,6 +336,7 @@
       }
     },
     "Niveau: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -373,6 +383,7 @@
       }
     },
     "Reload Sample Data?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -389,6 +400,7 @@
       }
     },
     "Reloading the sample data deletes all changes to the current data." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -615,6 +627,7 @@
       }
     },
     "Yes, reload sample data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

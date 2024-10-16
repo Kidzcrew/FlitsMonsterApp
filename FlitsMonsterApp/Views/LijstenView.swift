@@ -8,7 +8,6 @@ struct LijstenView: View {
     @State private var isReloadPresented = false
     @AppStorage(AppSettings.standaardGroepKey) private var geselecteerdeGroep: String = AppSettings.standaardGroep
 
-
     let alleGroepen = ["Alle lijsten", "Groep 3", "Groep 4", "Groep 5", "Groep 6", "Groep 7", "Groep 8"]
 
     var gefilterdeLijsten: [Lijst] {
@@ -20,62 +19,53 @@ struct LijstenView: View {
     }
 
     var body: some View {
-        @Bindable var navigationContext = navigationContext
-        VStack {
-            HStack {
-                Text("Filter op groep:")
-                Menu {
-                    ForEach(alleGroepen, id: \.self) { groep in
-                        Button(groep) {
-                            geselecteerdeGroep = groep
-                            print("Geselecteerde groep: \(groep)") // Print de geselecteerde groep
+        NavigationStack {
+            VStack {
+                HStack {
+                    Text("Filter op groep:")
+                    Menu {
+                        ForEach(alleGroepen, id: \.self) { groep in
+                            Button(groep) {
+                                geselecteerdeGroep = groep
+                            }
+                        }
+                    } label: {
+                        Label(geselecteerdeGroep, systemImage: "line.horizontal.3.decrease.circle")
+                    }
+                    Spacer()
+                }
+                .padding()
+
+                ScrollView {
+                    LazyVStack(spacing: 20) {
+                        ForEach(gefilterdeLijsten) { lijst in
+                            LijstElement(lijst: lijst)
+                                .onTapGesture {
+                                    // Stel de geselecteerde lijst in via de NavigationContext
+                                    navigationContext.selectedLijst = lijst
+                                }
                         }
                     }
+                    .padding(.vertical)
+                }
+            }
+            .toolbar {
+                Button {
+                    isReloadPresented = true
                 } label: {
-                    Label(geselecteerdeGroep, systemImage: "line.horizontal.3.decrease.circle")
+                    Label("", systemImage: "arrow.clockwise")
+                        .help("Reload sample data")
                 }
-                Spacer()
             }
-            .padding()
-
-            List(selection: $navigationContext.selectedLijst) {
-                #if os(macOS)
-                Section(navigationContext.sidebarTitle) {
-                    ListCategories(woordLijsten: gefilterdeLijsten)
+            .task {
+                if woordLijsten.isEmpty {
+                    Lijst.insertSampleData(modelContext: modelContext)
                 }
-                #else
-                ListCategories(woordLijsten: gefilterdeLijsten)
-                #endif
+            }
+            .navigationDestination(for: Lijst.self) { lijst in
+                WoordenLijstView(lijst: lijst) // Gebruik de LijstDetailView hier
             }
         }
-        .alert("Reload Sample Data?", isPresented: $isReloadPresented) {
-            Button("Yes, reload sample data", role: .destructive) {
-                reloadSampleData()
-            }
-        } message: {
-            Text("Reloading the sample data deletes all changes to the current data.")
-        }
-        .toolbar {
-            Button {
-                isReloadPresented = true
-            } label: {
-                Label("", systemImage: "arrow.clockwise")
-                    .help("Reload sample data")
-            }
-        }
-        .task {
-            if woordLijsten.isEmpty {
-                print("woordenlijst is leeg - sample gebruikt")
-                Lijst.insertSampleData(modelContext: modelContext)
-            }
-        }
-    }
-
-    @MainActor
-    private func reloadSampleData() {
-        navigationContext.selectedWoord = nil
-        navigationContext.selectedLijst = nil
-        Lijst.reloadSampleData(modelContext: modelContext)
     }
 
     private func filterLijstenOpGroep(_ groep: String) -> [Lijst] {
