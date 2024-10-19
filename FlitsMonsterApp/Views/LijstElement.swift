@@ -8,7 +8,6 @@ struct LijstElement: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .topLeading) {
-                // Rechthoek met afgeronde bovenhoeken
                 UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10, topTrailing: 10))
                     .frame(height: 110.0)
                     .foregroundStyle(
@@ -20,12 +19,11 @@ struct LijstElement: View {
                     )
 
                 HStack(spacing: 0) {
-                    // Afbeelding zonder padding aan de linkerzijde
                     Image(lijst.icoon)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 110, height: 110)  // Maak de hoogte gelijk aan de rechthoek
-                        .clipShape(UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10)))  // Gebruik clipShape voor afgeronde hoeken
+                        .frame(width: 110, height: 110)
+                        .clipShape(UnevenRoundedRectangle(cornerRadii: .init(topLeading: 10)))
 
                     VStack(alignment: .leading, spacing: 5) {
                         Text(lijst.naam)
@@ -44,10 +42,9 @@ struct LijstElement: View {
                             .bold()
                     }
                     .padding(.leading, 10)
-                    
+
                     Spacer()
 
-                    // Chevron voor WoordenLijstView
                     NavigationLink(destination: FlitsScherm(lijst: lijst)) {
                         Image(systemName: "play.circle.fill")
                             .resizable()
@@ -60,7 +57,6 @@ struct LijstElement: View {
             }
             .frame(maxWidth: 400)
 
-            // Progressbar tussen de bovenste en onderste rechthoek zonder padding
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color.blue)
@@ -72,8 +68,8 @@ struct LijstElement: View {
             .frame(maxWidth: 400)
 
             ZStack {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .frame(height: isExpanded ? 100.0 : 40.0)
+                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10))
+                    .frame(height: isExpanded ? 80.0 : 40.0)
                     .foregroundStyle(Color.white)
 
                 VStack {
@@ -95,68 +91,76 @@ struct LijstElement: View {
                                     .foregroundStyle(.gray)
                                     .font(.footnote)
                             }
-
-                            Spacer()
+                           Spacer()
                         }
 
                         Divider()
                             .frame(height: 1)
                             .background(Color.gray)
-                            .opacity(0.5)
+                            .opacity(0.3)
 
-                        HStack {
-                            Button(action: {
-                                print("Statistieken aangeraakt")
-                            }) {
-                                Image(systemName: "chart.line.uptrend.xyaxis")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
+                        ZStack {
+                            HStack {
+                                Button(action: {
+                                    print("Statistieken aangeraakt")
+                                }) {
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(.blue)
+                                }
+                                NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
+                                    Image(systemName: "eye.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(.blue)
+                                }
+                                Spacer()
+
+                                Text("Geoefend: \(lijst.voortgang) keer")
                                     .foregroundStyle(.blue)
-                            }
-                            NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
-                                Image(systemName: "eye.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.blue)
+                                    .font(.subheadline)
                             }
                             Spacer()
-
                             Button(action: {
                                 withAnimation {
                                     isExpanded.toggle()
                                 }
                             }) {
                                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundStyle(.gray)
-                            }
-                            Spacer()
-                            Text("Geoefend: \(lijst.voortgang) keer")
-                                .foregroundStyle(.blue)
-                                .font(.subheadline)
-                        }
-                    } else {
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                withAnimation {
-                                    isExpanded.toggle()
-                                }
-                            }) {
-                                Image(systemName: "chevron.down")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                                     .foregroundStyle(.gray)
                             }
-                            .padding(.trailing, 80)
-
-                            Text("Geoefend: \(lijst.voortgang) keer")
+                            Spacer()
+                        }
+                    } else {
+                        ZStack {
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    withAnimation {
+                                        isExpanded.toggle()
+                                    }
+                                }) {
+                                    Image(systemName: "chevron.down")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                        .foregroundStyle(.gray)
+                                }
+                                Spacer()
+                            }
+                            HStack {
+                            Spacer()
+                            
+                            Text("Geoefend: \(lijst.voortgang) x")
                                 .foregroundStyle(.blue)
                                 .font(.subheadline)
+                            }
                         }
                     }
                 }
@@ -168,7 +172,6 @@ struct LijstElement: View {
         .padding(.horizontal, 10)
     }
 
-    // Functie om de favorietenstatus op te slaan
     private func saveFavorietStatus() {
         do {
             try lijst.modelContext?.save()

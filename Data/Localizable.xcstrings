@@ -216,6 +216,9 @@
         }
       }
     },
+    "Geoefend: %lld x" : {
+
+    },
     "Home" : {
       "localizations" : {
         "en" : {
