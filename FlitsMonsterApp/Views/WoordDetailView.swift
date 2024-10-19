@@ -77,7 +77,7 @@ private struct WoordDetailContentView: View {
                     }
                 }
                 HStack {
-                    Text("Soort")
+                    Text("Soort **AVI**")
                     Spacer()
                     Text(woord.soort.rawValue)
                 }

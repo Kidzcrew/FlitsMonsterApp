@@ -1,0 +1,1 @@
+De wens om alleen **makkelijke woorden** te lezen kan een vorm van perfectionisme zijn. Het is niet zo erg als de woorden de eerste tijd relatief makkelijk gaan, want korte makkelijke woorden zijn vaak onderdeel van langere woorden. Maar alleen makkelijke woorden leren is onvoldoende. Zoek een balans tussen makkelijke en moeilijkere woorden.

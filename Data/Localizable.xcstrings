@@ -40,6 +40,18 @@
         }
       }
     },
+    "0,5 sec" : {
+
+    },
+    "2 min" : {
+
+    },
+    "3 sec" : {
+
+    },
+    "15 sec" : {
+
+    },
     "Aantal resterende woorden: %lld" : {
       "localizations" : {
         "en" : {
@@ -155,6 +167,9 @@
         }
       }
     },
+    "Failed to load article." : {
+
+    },
     "Filter op groep:" : {
       "localizations" : {
         "en" : {
@@ -165,7 +180,7 @@
         }
       }
     },
-    "Flitstijd Instellen" : {
+    "Flitstijd" : {
 
     },
     "Flitstijd: %@" : {
@@ -217,6 +232,12 @@
         }
       }
     },
+    "Homes **huis**" : {
+
+    },
+    "Instellingen" : {
+
+    },
     "Ja" : {
       "localizations" : {
         "en" : {
@@ -252,6 +273,9 @@
           }
         }
       }
+    },
+    "Lettertype" : {
+
     },
     "Lijsten" : {
       "localizations" : {
@@ -325,6 +349,9 @@
         }
       }
     },
+    "Nieuws" : {
+
+    },
     "niveau:" : {
       "localizations" : {
         "en" : {
@@ -355,6 +382,12 @@
           }
         }
       }
+    },
+    "Onzichtbaar na" : {
+
+    },
+    "Onzichtbaar na: %@" : {
+
     },
     "Opslaan" : {
       "localizations" : {
@@ -452,6 +485,9 @@
         }
       }
     },
+    "Selecteer Lettertype" : {
+
+    },
     "Settings" : {
       "localizations" : {
         "en" : {
@@ -479,6 +515,7 @@
       }
     },
     "Soort" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -487,6 +524,9 @@
           }
         }
       }
+    },
+    "Soort **AVI**" : {
+
     },
     "Verwijder" : {
       "localizations" : {

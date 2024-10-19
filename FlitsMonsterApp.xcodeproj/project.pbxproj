@@ -30,9 +30,22 @@
 		90C1B2F92CA56E2B0074C7DC /* FlitsMonsterApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = FlitsMonsterApp.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9092F6FA2CC17977001C7DBB /* Exceptions for "FlitsMonsterApp" folder in "FlitsMonsterApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 90776DD22CA42245009162E1 /* FlitsMonsterApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		90776DD52CA42245009162E1 /* FlitsMonsterApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9092F6FA2CC17977001C7DBB /* Exceptions for "FlitsMonsterApp" folder in "FlitsMonsterApp" target */,
+			);
 			path = FlitsMonsterApp;
 			sourceTree = "<group>";
 		};
@@ -415,6 +428,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlitsMonsterApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -457,6 +471,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlitsMonsterApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;

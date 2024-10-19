@@ -18,7 +18,7 @@ struct ContentView: View {
                 }
                 .environment(navigationContext)  // Pass navigation context to LijstenView
             
-            NewsView()  // Assume you have a view for news articles
+            NewsOverviewView()  
                 .tabItem {
                     Label("News", systemImage: "newspaper.fill")
                 }
@@ -59,7 +59,7 @@ struct NewsView: View {
 
 struct HomeView: View {
     var body: some View {
-        Text("Home")
+        Text("Homes **huis**")
     }
 }
 
