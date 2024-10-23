@@ -30,9 +30,14 @@ struct LijstElement: View {
                             .foregroundStyle(.white)
                             .font(.headline)
                             .bold()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                        
                         Text(lijst.beschrijving)
                             .foregroundStyle(.white)
                             .font(.footnote)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.6)
                         Text("\(lijst.woorden.count) Woorden")
                             .foregroundStyle(.white)
                             .font(.subheadline)
@@ -54,6 +59,23 @@ struct LijstElement: View {
                     }
                     .padding(.trailing, 10)
                 }
+                // Het hartje linksboven
+                Button(action: {
+                    // Toggle de favorietenstatus en sla de wijziging op
+                    lijst.isFavoriet.toggle()
+                    saveFavorietStatus()
+                }) {
+                    Image(systemName: lijst.isFavoriet ? "heart.fill" : "heart")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(lijst.isFavoriet ? .red : .white) // Rood als het een favoriet is, anders wit
+                        .padding(8)
+                }
+                .background(Color.white.opacity(0.6))
+                .cornerRadius(20)
+                .padding(.leading, 10)
+                .padding(.top, 10)
             }
             .frame(maxWidth: 400)
 
@@ -101,26 +123,26 @@ struct LijstElement: View {
 
                         ZStack {
                             HStack {
-                                Button(action: {
-                                    print("Statistieken aangeraakt")
-                                }) {
-                                    Image(systemName: "chart.line.uptrend.xyaxis")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 20, height: 20)
-                                        .foregroundStyle(.blue)
-                                }
+
                                 NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
                                     Image(systemName: "eye.fill")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
                                         .foregroundStyle(.blue)
+                                    Text("lijstdetails")
+                                        .foregroundStyle(.blue)
+                                        .font(.subheadline)
+                                        
                                 }
                                 Spacer()
-
-                                Text("Geoefend: \(lijst.voortgang) keer")
-                                    .foregroundStyle(.blue)
+                                Image(systemName: "arrow.trianglehead.clockwise.rotate.90")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.gray)
+                                Text("\(lijst.voortgang)x")
+                                    .foregroundStyle(.gray)
                                     .font(.subheadline)
                             }
                             Spacer()
@@ -156,10 +178,14 @@ struct LijstElement: View {
                             }
                             HStack {
                             Spacer()
-                            
-                            Text("Geoefend: \(lijst.voortgang) x")
-                                .foregroundStyle(.blue)
-                                .font(.subheadline)
+                                Image(systemName: "arrow.trianglehead.clockwise.rotate.90")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(.gray)
+                                Text("\(lijst.voortgang)x")
+                                    .foregroundStyle(.gray)
+                                    .font(.subheadline)
                             }
                         }
                     }

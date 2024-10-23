@@ -40,6 +40,9 @@
         }
       }
     },
+    "%lldx" : {
+
+    },
     "0,5 sec" : {
 
     },
@@ -61,6 +64,9 @@
           }
         }
       }
+    },
+    "Activate" : {
+
     },
     "Annuleer" : {
       "localizations" : {
@@ -89,6 +95,9 @@
       }
     },
     "AVI %@" : {
+
+    },
+    "Bekijk stats" : {
 
     },
     "Bewaar" : {
@@ -131,6 +140,9 @@
         }
       }
     },
+    "Bookmark" : {
+
+    },
     "Dark Mode" : {
       "localizations" : {
         "en" : {
@@ -147,6 +159,12 @@
         }
       }
     },
+    "Deactivate" : {
+
+    },
+    "Delete" : {
+
+    },
     "Dit woord zit al in lijst(en): %@. Wil je het woord hier ook toevoegen?" : {
       "localizations" : {
         "en" : {
@@ -156,6 +174,9 @@
           }
         }
       }
+    },
+    "Edit" : {
+
     },
     "Er is een onverwachte fout opgetreden." : {
       "localizations" : {
@@ -167,7 +188,13 @@
         }
       }
     },
+    "Er zijn geen recent gebruikte lijsten." : {
+
+    },
     "Failed to load article." : {
+
+    },
+    "Favorieten" : {
 
     },
     "Filter op groep:" : {
@@ -207,6 +234,7 @@
       }
     },
     "Geoefend: %lld keer" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -216,7 +244,7 @@
         }
       }
     },
-    "Geoefend: %lld x" : {
+    "Herladen van de sample data verwijdert alle bestaande wijzigingen." : {
 
     },
     "Home" : {
@@ -235,9 +263,6 @@
         }
       }
     },
-    "Homes **huis**" : {
-
-    },
     "Instellingen" : {
 
     },
@@ -250,6 +275,12 @@
           }
         }
       }
+    },
+    "Ja, herlaad sample data" : {
+
+    },
+    "Je kunt lijsten als favoriet markeren door op het hartje te klikken. Je vindt alle lijsten in het lijstmenu." : {
+
     },
     "Kies een woord" : {
       "localizations" : {
@@ -280,6 +311,9 @@
     "Lettertype" : {
 
     },
+    "lijstdetails" : {
+
+    },
     "Lijsten" : {
       "localizations" : {
         "en" : {
@@ -299,6 +333,9 @@
           }
         }
       }
+    },
+    "Meest Recent" : {
+
     },
     "Naam" : {
       "localizations" : {
@@ -356,6 +393,7 @@
 
     },
     "niveau:" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -366,7 +404,6 @@
       }
     },
     "Niveau: %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -375,6 +412,9 @@
           }
         }
       }
+    },
+    "Oefen met woordenlijsten om je vaardigheden te verbeteren!" : {
+
     },
     "OK" : {
       "localizations" : {
@@ -451,6 +491,9 @@
           }
         }
       }
+    },
+    "Sample Data Herladen?" : {
+
     },
     "Select Language" : {
       "localizations" : {
@@ -531,6 +574,9 @@
     "Soort **AVI**" : {
 
     },
+    "Unbookmark" : {
+
+    },
     "Verwijder" : {
       "localizations" : {
         "en" : {
@@ -571,6 +617,9 @@
         }
       }
     },
+    "Verwijder lijst" : {
+
+    },
     "Voeg lijst toe" : {
       "localizations" : {
         "en" : {
@@ -601,6 +650,9 @@
         }
       }
     },
+    "Weet je zeker dat je deze lijst wilt verwijderen?" : {
+
+    },
     "welcome-message" : {
       "comment" : "Welkomstbericht start app",
       "extractionState" : "manual",
@@ -618,6 +670,9 @@
           }
         }
       }
+    },
+    "Welkom bij FlitsMonster" : {
+
     },
     "Wijzig woord" : {
       "localizations" : {

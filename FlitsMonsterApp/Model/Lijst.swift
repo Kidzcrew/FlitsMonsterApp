@@ -16,6 +16,9 @@ final class Lijst: Identifiable {
     var isFavoriet: Bool
     var taal: Taal // Attribute for language distinction
 
+    // New timestamp to track when the list was last used
+    var lastUsed: Date? = nil
+
     @Relationship(deleteRule: .cascade, inverse: \Woord.lijsten)
     var woorden: [Woord]
 
@@ -41,6 +44,7 @@ final class Lijst: Identifiable {
         self.isFavoriet = isFavoriet
         self.woorden = woorden
         self.taal = taal // Dynamically set language
+        self.lastUsed = nil // Initially, the list hasn't been used
     }
 }
 

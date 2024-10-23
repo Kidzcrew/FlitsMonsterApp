@@ -11,6 +11,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
+                .environment(navigationContext)  // Pass navigation context to HomeView
             
             ThreeColumnContentView()
                 .tabItem {
@@ -56,12 +57,6 @@ struct NewsView: View {
     }
 }
 
-
-struct HomeView: View {
-    var body: some View {
-        Text("Homes **huis**")
-    }
-}
 
 #Preview {
     ContentView()

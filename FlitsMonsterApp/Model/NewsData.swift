@@ -20,17 +20,17 @@ struct NewsData {
     static let newsArticles = [
         NewsArticle(
             title: "Alleen Makkelijke Woorden",
-            image: "nieuws1", // Replace with the correct image name if available
+            image: "nieuws5", // Replace with the correct image name if available
             fileName: "Alleen_makkelijke_woorden" // Markdown file
         ),
         NewsArticle(
             title: "Flitsen Leuker Maken",
-            image: "nieuws2", // Replace with the correct image name
+            image: "nieuws3", // Replace with the correct image name
             fileName: "flitsen_leuker_maken"
         ),
         NewsArticle(
             title: "Gezellig Samen Flitsen",
-            image: "nieuws3", // Replace with the correct image name
+            image: "nieuws1", // Replace with the correct image name
             fileName: "Gezellig_samen_flitsen"
         ),
         NewsArticle(
@@ -40,7 +40,7 @@ struct NewsData {
         ),
         NewsArticle(
             title: "Instellingen Wijzigen",
-            image: "nieuws1", // Replace with the correct image name
+            image: "nieuws6", // Replace with the correct image name
             fileName: "Instellingen_wijzigen"
         ),
         NewsArticle(
