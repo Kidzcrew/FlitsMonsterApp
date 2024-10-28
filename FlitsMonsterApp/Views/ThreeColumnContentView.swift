@@ -19,24 +19,15 @@ struct ThreeColumnContentView: View {
                 Text("Selecteer een lijst")
             }
         } detail: {
-            // Detailweergave voor geselecteerd woord
-            if let selectedWoord = navigationContext.selectedWoord,
-               let selectedLijst = navigationContext.selectedLijst {
-                // We unwrappen de optionele lijst en geven de binding naar de woorden door
-                WoordDetailView(woorden: .constant(selectedLijst.woorden), woord: selectedWoord) // Hier geven we de woorden als binding door
-                    .navigationTitle(selectedWoord.naam)
-                    .onAppear {
-                        // Sluit de zijbalk en content view als een woord is geselecteerd
-                        navigationContext.columnVisibility = .detailOnly
-                    }
-            } else {
-                Text("Selecteer een woord")
-            }
+            // Empty detail pane to prevent direct navigation to WoordDetailView
+            Text("Selecteer een woord om te bekijken in WoordenLijstView")
+                .foregroundColor(.gray)
         }
-        .onChange(of: navigationContext.selectedWoord) { 
-            // Elke keer als een nieuw woord wordt geselecteerd, verberg de zijbalk en content view
+        .onChange(of: navigationContext.selectedWoord) {
+            // Update selected word but do not navigate to a separate detail view
             if navigationContext.selectedWoord != nil {
-                navigationContext.columnVisibility = .detailOnly
+                // Optionally reset to show all columns, or adjust based on app design
+                navigationContext.columnVisibility = .all
             }
         }
         .onAppear {

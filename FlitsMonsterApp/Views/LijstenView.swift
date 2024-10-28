@@ -5,7 +5,6 @@ struct LijstenView: View {
     @Environment(NavigationContext.self) private var navigationContext
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Lijst.naam) private var woordLijsten: [Lijst]
-    @State private var isReloadPresented = false
     @AppStorage(AppSettings.standaardGroepKey) private var geselecteerdeGroep: String = AppSettings.standaardGroep
 
     let alleGroepen = ["Alle lijsten", "Groep 3", "Groep 4", "Groep 5", "Groep 6", "Groep 7", "Groep 8"]
@@ -43,20 +42,14 @@ struct LijstenView: View {
                                 .onTapGesture {
                                     // Stel de geselecteerde lijst in via de NavigationContext
                                     navigationContext.selectedLijst = lijst
+                                    print("Navigated to WoordenLijstView with lijst: \(lijst.naam)") // Debug print
                                 }
                         }
                     }
                     .padding(.vertical)
                 }
             }
-            .toolbar {
-                Button {
-                    isReloadPresented = true
-                } label: {
-                    Label("", systemImage: "arrow.clockwise")
-                        .help("Reload sample data")
-                }
-            }
+
             .task {
                 if woordLijsten.isEmpty {
                     Lijst.insertSampleData(modelContext: modelContext)
@@ -64,6 +57,7 @@ struct LijstenView: View {
             }
             .navigationDestination(for: Lijst.self) { lijst in
                 WoordenLijstView(lijst: lijst) // Gebruik de LijstDetailView hier
+                
             }
         }
     }
@@ -102,17 +96,6 @@ private struct ListCategories: View {
     ModelContainerPreview(ModelContainer.sample) {
         NavigationStack {
             LijstenView()
-        }
-        .environment(NavigationContext())
-    }
-}
-
-#Preview("WoordLijsten") {
-    ModelContainerPreview(ModelContainer.sample) {
-        NavigationStack {
-            List {
-                ListCategories(woordLijsten: [.lijstE3, .lijstE4])
-            }
         }
         .environment(NavigationContext())
     }

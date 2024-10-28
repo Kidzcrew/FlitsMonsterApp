@@ -1,4 +1,4 @@
-import SwiftUI
+/*import SwiftUI
 import SwiftData
 
 struct WoordDetailView: View {
@@ -92,3 +92,4 @@ private struct WoordDetailContentView: View {
             .environment(NavigationContext())
     }
 }
+*/

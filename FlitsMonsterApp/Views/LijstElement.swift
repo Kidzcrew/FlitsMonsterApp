@@ -5,6 +5,10 @@ struct LijstElement: View {
     @State private var isExpanded: Bool = false
     @Bindable var lijst: Lijst // Ontvang het volledige Lijst-object
 
+    var activeWords: [Woord] {
+        lijst.woorden.filter { $0.isActive }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .topLeading) {
@@ -38,9 +42,12 @@ struct LijstElement: View {
                             .font(.footnote)
                             .lineLimit(2)
                             .minimumScaleFactor(0.6)
-                        Text("\(lijst.woorden.count) Woorden")
+                        
+                        // Display the count of only active words
+                        Text("\(activeWords.count) Woorden")
                             .foregroundStyle(.white)
                             .font(.subheadline)
+                        
                         Text("AVI \(lijst.niveau?.rawValue ?? "Onbekend")")
                             .foregroundStyle(.white)
                             .font(.subheadline)
@@ -59,7 +66,7 @@ struct LijstElement: View {
                     }
                     .padding(.trailing, 10)
                 }
-                // Het hartje linksboven
+
                 Button(action: {
                     // Toggle de favorietenstatus en sla de wijziging op
                     lijst.isFavoriet.toggle()
@@ -69,7 +76,7 @@ struct LijstElement: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
-                        .foregroundStyle(lijst.isFavoriet ? .red : .white) // Rood als het een favoriet is, anders wit
+                        .foregroundStyle(lijst.isFavoriet ? .red : .white)
                         .padding(8)
                 }
                 .background(Color.white.opacity(0.6))
@@ -102,18 +109,18 @@ struct LijstElement: View {
                                 .font(.footnote)
                                 .bold()
 
-                            if lijst.woorden.count < 10 {
-                                Text(lijst.woorden.map { $0.naam }.joined(separator: ", "))
+                            if activeWords.count < 10 {
+                                Text(activeWords.map { $0.naam }.joined(separator: ", "))
                                     .foregroundStyle(.gray)
                                     .font(.footnote)
                             } else {
-                                let eersteVijf = lijst.woorden.prefix(5).map { $0.naam }.joined(separator: ", ")
-                                let laatsteVijf = lijst.woorden.suffix(5).map { $0.naam }.joined(separator: ", ")
+                                let eersteVijf = activeWords.prefix(5).map { $0.naam }.joined(separator: ", ")
+                                let laatsteVijf = activeWords.suffix(5).map { $0.naam }.joined(separator: ", ")
                                 Text("\(eersteVijf) ... \(laatsteVijf)")
                                     .foregroundStyle(.gray)
                                     .font(.footnote)
                             }
-                           Spacer()
+                            Spacer()
                         }
 
                         Divider()
@@ -123,7 +130,6 @@ struct LijstElement: View {
 
                         ZStack {
                             HStack {
-
                                 NavigationLink(destination: WoordenLijstView(lijst: lijst)) {
                                     Image(systemName: "eye.fill")
                                         .resizable()
@@ -133,7 +139,6 @@ struct LijstElement: View {
                                     Text("lijstdetails")
                                         .foregroundStyle(.blue)
                                         .font(.subheadline)
-                                        
                                 }
                                 Spacer()
                                 Image(systemName: "arrow.trianglehead.clockwise.rotate.90")
@@ -177,7 +182,7 @@ struct LijstElement: View {
                                 Spacer()
                             }
                             HStack {
-                            Spacer()
+                                Spacer()
                                 Image(systemName: "arrow.trianglehead.clockwise.rotate.90")
                                     .resizable()
                                     .scaledToFit()

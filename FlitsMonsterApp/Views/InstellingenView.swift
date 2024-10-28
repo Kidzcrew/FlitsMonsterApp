@@ -9,8 +9,11 @@ struct InstellingenView: View {
     @AppStorage("flitstijd") private var flitstijd: Double = 60
     // State for "Onzichtbaar na" slider
     @AppStorage("onzichtbaarNa") private var onzichtbaarNa: Double = 1.5 // Default: 1.5 seconds
+    // State for "newCardTime" slider
+    @AppStorage("newCardTime") private var newCardTime: Double = 10 // Default: 10 seconds
+    
     @AppStorage("selectedFont") private var selectedFont = "San Francisco"
-
+    
     let languages = ["Engels", "Nederlands"]
     let fonts = ["San Francisco", "Dyslexie", "Krijtbord", "School"]  // De toegevoegde lettertypen
 
@@ -66,13 +69,26 @@ struct InstellingenView: View {
                     }
                     Text("Onzichtbaar na: \(formattedOnzichtbaarNa())")
                 }
+                
+                // New Section for "New Card Time" with Slider
+                Section(header: Text("Tijd tot nieuw kaartje")) {
+                    Slider(value: $newCardTime, in: 5...20, step: 1) {
+                        Text("Tijd tot nieuw kaartje")
+                    } minimumValueLabel: {
+                        Text("5 sec")
+                    } maximumValueLabel: {
+                        Text("20 sec")
+                    }
+                    Text("Tijd tot nieuw kaartje: \(Int(newCardTime)) seconden")
+                }
             }
-            .navigationTitle("Instellingen")  // Make sure the title is set within NavigationStack
+            .navigationTitle("Instellingen")
             .preferredColorScheme(isDarkMode ? .dark : .light)
             .onAppear {
                 print("Selected Language on Appear: \(selectedLanguage)")
                 print("Flitstijd on Appear: \(flitstijd) seconden")
                 print("Onzichtbaar na on Appear: \(onzichtbaarNa) seconden")
+                print("Tijd tot nieuw kaartje: \(newCardTime) seconden")
             }
             .onChange(of: selectedLanguage) { newValue in
                 print("Selected Language changed to: \(newValue)")
@@ -82,6 +98,9 @@ struct InstellingenView: View {
             }
             .onChange(of: onzichtbaarNa) { newValue in
                 print("Onzichtbaar na changed to: \(formattedOnzichtbaarNa())")
+            }
+            .onChange(of: newCardTime) { newValue in
+                print("Tijd tot nieuw kaartje changed to: \(newValue) seconden")
             }
         }
     }

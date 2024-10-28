@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Woord: Identifiable {
+final class Woord: Identifiable, Hashable {
     var id = UUID()
     var naam: String
     var soort: Soort

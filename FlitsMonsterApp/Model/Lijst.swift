@@ -2,7 +2,7 @@ import SwiftData
 import Foundation
 
 @Model
-final class Lijst: Identifiable {
+final class Lijst: Identifiable, Hashable {
     var id = UUID()
     @Attribute(.unique) var naam: String
     var beschrijving: String = "voeg beschrijving toe"

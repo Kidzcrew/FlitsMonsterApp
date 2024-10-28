@@ -6,7 +6,6 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Lijst.lastUsed, order: .reverse) private var allLijsten: [Lijst]
     
-    @State private var isReloadPresented = false
     
     var recentLijsten: [Lijst] {
         Array(allLijsten.prefix(2))  // Limit to the 2 most recent lists
@@ -49,10 +48,9 @@ struct HomeView: View {
                                     .foregroundColor(.gray)
                             } else {
                                 ForEach(recentLijsten) { lijst in
-                                    LijstElement(lijst: lijst)
-                                        .onTapGesture {
-                                            navigationContext.selectedLijst = lijst
-                                        }
+                                    NavigationLink(destination: FlitsScherm(lijst: lijst)) {
+                                        LijstElement(lijst: lijst)
+                                    }
                                 }
                             }
                         }
@@ -66,10 +64,9 @@ struct HomeView: View {
                                     .foregroundColor(.gray)
                             } else {
                                 ForEach(favorieteLijsten) { lijst in
-                                    LijstElement(lijst: lijst)
-                                        .onTapGesture {
-                                            navigationContext.selectedLijst = lijst
-                                        }
+                                    NavigationLink(destination: FlitsScherm(lijst: lijst)) {
+                                        LijstElement(lijst: lijst)
+                                    }
                                 }
                             }
                         }
@@ -77,29 +74,7 @@ struct HomeView: View {
                     .padding(.horizontal)  // Add padding to the scroll content
                 }
             }
-            .toolbar {
-                Button {
-                    isReloadPresented = true
-                } label: {
-                    Label("", systemImage: "arrow.clockwise")
-                        .help("Reload sample data")
-                }
-            }
-            .alert("Sample Data Herladen?", isPresented: $isReloadPresented) {
-                Button("Ja, herlaad sample data", role: .destructive) {
-                    Lijst.reloadSampleData(modelContext: modelContext)
-                }
-            } message: {
-                Text("Herladen van de sample data verwijdert alle bestaande wijzigingen.")
-            }
-            .task {
-                if allLijsten.isEmpty {
-                    Lijst.insertSampleData(modelContext: modelContext)
-                }
-            }
-            .navigationDestination(for: Lijst.self) { lijst in
-                FlitsScherm(lijst: lijst)
-            }
+
         }
     }
 }

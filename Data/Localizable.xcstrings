@@ -5,6 +5,7 @@
       "shouldTranslate" : false
     },
     "%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -43,6 +44,15 @@
     "%lldx" : {
 
     },
+    "⏳ Flitstijd Timer: %llds" : {
+
+    },
+    "⏳ OnzichtbaarNa Timer: %llds" : {
+
+    },
+    "✅ Known Words: %lld" : {
+
+    },
     "0,5 sec" : {
 
     },
@@ -52,7 +62,13 @@
     "3 sec" : {
 
     },
+    "5 sec" : {
+
+    },
     "15 sec" : {
+
+    },
+    "20 sec" : {
 
     },
     "Aantal resterende woorden: %lld" : {
@@ -111,6 +127,7 @@
       }
     },
     "Bewerk %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -131,6 +148,7 @@
       }
     },
     "Bewerk woord" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -223,7 +241,11 @@
         }
       }
     },
+    "Ga terug" : {
+
+    },
     "Geen lijst gevonden" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -243,9 +265,6 @@
           }
         }
       }
-    },
-    "Herladen van de sample data verwijdert alle bestaande wijzigingen." : {
-
     },
     "Home" : {
       "localizations" : {
@@ -276,13 +295,14 @@
         }
       }
     },
-    "Ja, herlaad sample data" : {
-
-    },
     "Je kunt lijsten als favoriet markeren door op het hartje te klikken. Je vindt alle lijsten in het lijstmenu." : {
 
     },
+    "Je wist deze ronde wel %lld woorden!" : {
+
+    },
     "Kies een woord" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -413,6 +433,9 @@
         }
       }
     },
+    "Nog een keer!" : {
+
+    },
     "Oefen met woordenlijsten om je vaardigheden te verbeteren!" : {
 
     },
@@ -443,6 +466,7 @@
       }
     },
     "Reload sample data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -492,9 +516,6 @@
         }
       }
     },
-    "Sample Data Herladen?" : {
-
-    },
     "Select Language" : {
       "localizations" : {
         "en" : {
@@ -522,6 +543,7 @@
       }
     },
     "Selecteer een woord" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -530,6 +552,9 @@
           }
         }
       }
+    },
+    "Selecteer een woord om te bekijken in WoordenLijstView" : {
+
     },
     "Selecteer Lettertype" : {
 
@@ -571,7 +596,10 @@
         }
       }
     },
-    "Soort **AVI**" : {
+    "Tijd tot nieuw kaartje" : {
+
+    },
+    "Tijd tot nieuw kaartje: %lld seconden" : {
 
     },
     "Unbookmark" : {
@@ -588,6 +616,7 @@
       }
     },
     "Verwijder %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -598,6 +627,7 @@
       }
     },
     "Verwijder %@?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -608,6 +638,7 @@
       }
     },
     "Verwijder het woord" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -649,6 +680,9 @@
           }
         }
       }
+    },
+    "Wat goed!" : {
+
     },
     "Weet je zeker dat je deze lijst wilt verwijderen?" : {
 
@@ -703,6 +737,9 @@
           }
         }
       }
+    },
+    "Woorden om nog meer te oefenen:" : {
+
     },
     "Woorden:" : {
       "localizations" : {

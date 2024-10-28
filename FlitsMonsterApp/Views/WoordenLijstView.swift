@@ -3,24 +3,14 @@ import SwiftData
 
 struct WoordenLijstView: View {
     @Bindable var lijst: Lijst
-
-    var body: some View {
-        WoordLijst(lijst: lijst)
-    }
-}
-
-private struct WoordLijst: View {
-    @Bindable var lijst: Lijst
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext // For model operations
+    @Environment(\.modelContext) private var modelContext
     @State private var isWoordEditorPresented = false
-    @State private var woordToEdit: Woord? = nil
+    @State private var woordToEdit: Woord?
 
     var body: some View {
         VStack(alignment: .leading) {
-            // Image and title area
             HStack(alignment: .top) {
-                // List icon
                 Image(lijst.icoon)
                     .resizable()
                     .scaledToFit()
@@ -31,7 +21,6 @@ private struct WoordLijst: View {
             }
             .padding(15)
 
-            // Description
             Text(lijst.beschrijving)
                 .font(.title2)
                 .foregroundColor(.gray)
@@ -39,7 +28,6 @@ private struct WoordLijst: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
 
-            // List of words
             List {
                 Text("Woorden:")
                     .font(.title2)
@@ -48,96 +36,132 @@ private struct WoordLijst: View {
                 ForEach(lijst.woorden, id: \.id) { woord in
                     HStack {
                         Text(woord.naam)
-                            .strikethrough(!woord.isActive) // Strikethrough for inactive words
-                            .foregroundColor(woord.isActive ? .primary : .gray) // Gray out inactive words
+                            .strikethrough(!woord.isActive)
+                            .foregroundColor(woord.isActive ? .primary : .gray)
 
                         Spacer()
 
-                        // Show bookmark icon if the word is bookmarked
                         if woord.isBookmarked {
                             Image(systemName: "bookmark.circle.fill")
                                 .foregroundColor(.blue)
                         } else {
-                            // Show practice state dots if the word is not bookmarked
                             PracticeDotsView(woord: woord)
                         }
                     }
                     .swipeActions(edge: .trailing) {
-                        // Swipe to toggle active/inactive (Archive)
                         Button {
                             toggleWoordActive(woord)
                         } label: {
                             Label(woord.isActive ? "Deactivate" : "Activate", systemImage: woord.isActive ? "xmark.circle" : "checkmark.circle")
                         }
-                        .tint(woord.isBookmarked ? .gray : (woord.isActive ? .orange : .green)) // Gray if bookmarked
-                        .disabled(woord.isBookmarked) // Disable if the word is bookmarked
+                        .tint(woord.isBookmarked ? .gray : (woord.isActive ? .orange : .green))
+                        .disabled(woord.isBookmarked)
 
-                        // Swipe to delete
                         Button(role: .destructive) {
                             deleteWoord(woord)
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
 
-                        // Swipe to edit
                         Button {
-                            woordToEdit = woord
-                            isWoordEditorPresented = true
+                            withAnimation {
+                                woordToEdit = woord
+                                isWoordEditorPresented = true
+                            }
+                            print("Edit button tapped. woordToEdit: \(woord.naam), isWoordEditorPresented: \(isWoordEditorPresented)")
                         } label: {
                             Label("Edit", systemImage: "pencil")
                         }
                         .tint(.blue)
                     }
                     .swipeActions(edge: .leading) {
-                        // Swipe to bookmark/unbookmark
                         Button {
                             toggleBookmark(woord)
                         } label: {
                             Label(woord.isBookmarked ? "Unbookmark" : "Bookmark", systemImage: "bookmark.fill")
                         }
-                        .tint(woord.isActive ? .yellow : .gray) // Gray out bookmark if inactive
-                        .disabled(!woord.isActive) // Disable bookmark action if inactive
+                        .tint(woord.isActive ? .yellow : .gray)
+                        .disabled(!woord.isActive)
                     }
                 }
             }
             .listStyle(InsetGroupedListStyle())
-        }
-        .sheet(isPresented: $isWoordEditorPresented) {
-            if let woordToEdit = woordToEdit {
-                WoordEditor(woord: woordToEdit, lijst: lijst, woorden: $lijst.woorden)
+
+            if isWoordEditorPresented, let woord = woordToEdit {
+                WoordEditorInline(woord: woord, lijst: lijst) { updatedWoord in
+                    if let index = lijst.woorden.firstIndex(where: { $0.id == updatedWoord.id }) {
+                        lijst.woorden[index] = updatedWoord
+                    } else {
+                        lijst.woorden.append(updatedWoord)
+                    }
+                    withAnimation {
+                        isWoordEditorPresented = false
+                        woordToEdit = nil
+                    }
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity)) // Move up from bottom with fade
+                .animation(.easeInOut(duration: 0.3), value: isWoordEditorPresented) // Smooth transition
+                .padding()
             }
         }
         .navigationTitle(lijst.naam)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.white)
-                }
-            }
-        }
     }
 
-    // Delete word function
     private func deleteWoord(_ woord: Woord) {
         withAnimation {
             modelContext.delete(woord)
         }
     }
 
-    // Toggle active/inactive function
     private func toggleWoordActive(_ woord: Woord) {
         withAnimation {
             woord.isActive.toggle()
         }
     }
 
-    // Toggle bookmark function
     private func toggleBookmark(_ woord: Woord) {
         withAnimation {
-            woord.isBookmarked.toggle() // Toggle bookmark status
+            woord.isBookmarked.toggle()
+        }
+    }
+}
+
+// Inline WoordEditor View for editing within the list view
+struct WoordEditorInline: View {
+    var woord: Woord
+    let lijst: Lijst
+    var onSave: (Woord) -> Void
+    
+    @State private var naam = ""
+    @State private var woordSoort = Woord.Soort.letterdief
+    @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        VStack {
+            TextField("Naam", text: $naam)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+
+            Picker("Woordsoort", selection: $woordSoort) {
+                ForEach(Woord.Soort.allCases, id: \.self) { soort in
+                    Text(soort.rawValue).tag(soort)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+
+            Button("Bewaar") {
+                let updatedWoord = woord
+                updatedWoord.naam = naam
+                updatedWoord.soort = woordSoort
+                onSave(updatedWoord)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+        }
+        .onAppear {
+            naam = woord.naam
+            woordSoort = woord.soort
         }
     }
 }
@@ -156,7 +180,6 @@ private struct PracticeDotsView: View {
         }
     }
 
-    // Helper to generate the correct practice dot based on its state
     private func practiceDot(for state: Woord.PracticeState) -> some View {
         let color: Color
         let systemImage: String
@@ -167,10 +190,10 @@ private struct PracticeDotsView: View {
             systemImage = "circle.dotted"
         case .slow:
             color = .yellow
-            systemImage = "circle.dashed.inset.fill"
+            systemImage = "circle.fill"
         case .morePractice:
             color = .orange
-            systemImage = "dot.circle.fill"
+            systemImage = "circle.fill"
         case .known:
             color = .green
             systemImage = "circle.fill"
@@ -185,43 +208,36 @@ struct LijstActionsView: View {
     @Bindable var lijst: Lijst
     @State private var isLijstEditorPresented = false
     @State private var isVoortgangSheetPresented = false
-    @Environment(\.modelContext) private var modelContext // Get the model context for deletion
-    @State private var isDeleteConfirmationPresented = false // For delete confirmation
-    @Environment(\.dismiss) private var dismiss // To dismiss the current view
+    @Environment(\.modelContext) private var modelContext
+    @State private var isDeleteConfirmationPresented = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Row 1: Niveau
             HStack {
-                Image(systemName: "chart.bar") // SF icon for niveau
+                Image(systemName: "chart.bar")
                 Text("Niveau: \(lijst.niveau?.rawValue ?? "E3")")
                     .font(.subheadline)
                     .foregroundColor(.primary)
             }
-
-            // Row 2: Edit List
             HStack {
-                Image(systemName: "pencil") // SF icon for editing
+                Image(systemName: "pencil")
                 Button("Bewerk lijst") {
                     isLijstEditorPresented = true
                 }
                 .foregroundColor(.blue)
             }
-
-            // Row 3: View Stats
             HStack {
-                Image(systemName: "chart.pie") // SF icon for stats
+                Image(systemName: "chart.pie")
                 Button("Bekijk stats") {
                     isVoortgangSheetPresented = true
                 }
                 .foregroundColor(.blue)
             }
-
-            // Row 4: Delete List
             HStack {
-                Image(systemName: "trash") // SF icon for delete
+                Image(systemName: "trash")
                 Button("Verwijder lijst") {
-                    isDeleteConfirmationPresented = true // Trigger confirmation before deleting
+                    isDeleteConfirmationPresented = true
                 }
                 .foregroundColor(.red)
             }
@@ -238,25 +254,22 @@ struct LijstActionsView: View {
         .sheet(isPresented: $isVoortgangSheetPresented) {
             LijstVoortgangView(lijst: lijst)
         }
-        // Action sheet for delete confirmation
         .confirmationDialog("Weet je zeker dat je deze lijst wilt verwijderen?", isPresented: $isDeleteConfirmationPresented, titleVisibility: .visible) {
             Button("Verwijder", role: .destructive) {
-                deleteLijst() // Perform the delete action
+                deleteLijst()
             }
             Button("Annuleer", role: .cancel) {}
         }
     }
 
-    // Function to delete the lijst and dismiss the current view
     private func deleteLijst() {
-        modelContext.delete(lijst) // Delete the lijst from the context
+        modelContext.delete(lijst)
         print("Lijst deleted: \(lijst.naam)")
-        dismiss() // Dismiss the view to go back to the previous screen
+        dismiss()
     }
 }
 
-// LijstVoortgangView to show stats for the list
-private struct LijstVoortgangView: View {
+struct LijstVoortgangView: View {
     let lijst: Lijst
     @Environment(\.dismiss) private var dismiss
 
