@@ -18,7 +18,7 @@ struct SessionSummaryView: View {
                 .font(.headline)
 
             if !morePracticeWords.isEmpty {
-                Text("Woorden om nog meer te oefenen:")
+                Text("Lees deze woorden nog eens door:")
                     .font(.subheadline)
                     .bold()
                 ForEach(morePracticeWords.prefix(5), id: \.id) { woord in

@@ -1,24 +1,21 @@
+// InstellingenView.swift
+
 import SwiftUI
 
 struct InstellingenView: View {
-    // State for theme (light/dark mode)
     @AppStorage("isDarkMode") private var isDarkMode = false
-    // State for selected language
     @AppStorage("selectedLanguage") private var selectedLanguage = "Nederlands"
-    // State for flitstijd slider
     @AppStorage("flitstijd") private var flitstijd: Double = 60
-    // State for "Onzichtbaar na" slider
-    @AppStorage("onzichtbaarNa") private var onzichtbaarNa: Double = 1.5 // Default: 1.5 seconds
-    // State for "newCardTime" slider
-    @AppStorage("newCardTime") private var newCardTime: Double = 10 // Default: 10 seconds
-    
+    @AppStorage("onzichtbaarNa") private var onzichtbaarNa: Double = 1.5
+    @AppStorage("showProgressBar") private var showProgressBar = true
+    @AppStorage("enableKlankView") private var enableKlankView = true // Nieuw: optie voor KlankView
     @AppStorage("selectedFont") private var selectedFont = "San Francisco"
-    
+
     let languages = ["Engels", "Nederlands"]
-    let fonts = ["San Francisco", "Dyslexie", "Krijtbord", "School"]  // De toegevoegde lettertypen
+    let fonts = ["San Francisco", "Dyslexie", "Krijtbord", "School"]
 
     var body: some View {
-        NavigationStack {  // Ensure NavigationStack is present
+        NavigationStack {
             Form {
                 Section(header: Text("Appearance")) {
                     Toggle(isOn: $isDarkMode) {
@@ -45,20 +42,15 @@ struct InstellingenView: View {
                     }
                     Text("Flitstijd: \(formattedFlitstijd())")
                 }
-                
-                // Section for Font selection
+
                 Section(header: Text("Lettertype")) {
                     Picker("Selecteer Lettertype", selection: $selectedFont) {
                         ForEach(fonts, id: \.self) { font in
                             Text(font).tag(font)
                         }
                     }
-                    .onChange(of: selectedFont, initial: false) { oldFont, newFont in
-                        print("Selected Font changed from: \(oldFont) to: \(newFont)")
-                    }
                 }
 
-                // New Section for "Onzichtbaar na" with Slider
                 Section(header: Text("Onzichtbaar na")) {
                     Slider(value: $onzichtbaarNa, in: 0.5...3, step: 0.5) {
                         Text("Onzichtbaar na")
@@ -69,43 +61,21 @@ struct InstellingenView: View {
                     }
                     Text("Onzichtbaar na: \(formattedOnzichtbaarNa())")
                 }
+
+                Section(header: Text("Progress Bar")) {
+                    Toggle("Show Progress Bar", isOn: $showProgressBar)
+                }
                 
-                // New Section for "New Card Time" with Slider
-                Section(header: Text("Tijd tot nieuw kaartje")) {
-                    Slider(value: $newCardTime, in: 5...20, step: 1) {
-                        Text("Tijd tot nieuw kaartje")
-                    } minimumValueLabel: {
-                        Text("5 sec")
-                    } maximumValueLabel: {
-                        Text("20 sec")
-                    }
-                    Text("Tijd tot nieuw kaartje: \(Int(newCardTime)) seconden")
+                // Nieuwe toggle voor KlankView
+                Section(header: Text("Klankweergave")) {
+                    Toggle("Toon klanken in afzonderlijke hokjes", isOn: $enableKlankView)
                 }
             }
             .navigationTitle("Instellingen")
             .preferredColorScheme(isDarkMode ? .dark : .light)
-            .onAppear {
-                print("Selected Language on Appear: \(selectedLanguage)")
-                print("Flitstijd on Appear: \(flitstijd) seconden")
-                print("Onzichtbaar na on Appear: \(onzichtbaarNa) seconden")
-                print("Tijd tot nieuw kaartje: \(newCardTime) seconden")
-            }
-            .onChange(of: selectedLanguage) { newValue in
-                print("Selected Language changed to: \(newValue)")
-            }
-            .onChange(of: flitstijd) { newValue in
-                print("Flitstijd changed to: \(formattedFlitstijd())")
-            }
-            .onChange(of: onzichtbaarNa) { newValue in
-                print("Onzichtbaar na changed to: \(formattedOnzichtbaarNa())")
-            }
-            .onChange(of: newCardTime) { newValue in
-                print("Tijd tot nieuw kaartje changed to: \(newValue) seconden")
-            }
         }
     }
 
-    // Helper function to format flitstijd
     private func formattedFlitstijd() -> String {
         switch flitstijd {
         case 15:
@@ -129,7 +99,6 @@ struct InstellingenView: View {
         }
     }
 
-    // Helper function to format "Onzichtbaar na"
     private func formattedOnzichtbaarNa() -> String {
         switch onzichtbaarNa {
         case 0.5:

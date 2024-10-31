@@ -38,14 +38,15 @@ struct FlitsScherm: View {
     }
 
     @AppStorage("flitstijd") private var flitstijd: Int = 60
-    @AppStorage("newCardTime") private var newCardTime: Double = 10 // Default time for showing the next card
+    @AppStorage("newCardTime") private var newCardTime: Double = 10
+    @AppStorage("showProgressBar") private var showProgressBar = true
     @State private var countdown: Int = 0
     @State private var sessionTimer: Timer?
-    @State private var noSwipeTimer: Timer? // Timer for inactivity detection
+    @State private var noSwipeTimer: Timer?
 
     @State private var cardViews: [CardView] = []
     @State private var currentIndex = 0
-    @State private var removalTransition = AnyTransition.trailingBottom
+    @State private var removalTransition = AnyTransition.move(edge: .trailing)
     @GestureState private var dragState = DragState.inactive
     private let dragThreshold: CGFloat = 80.0
 
@@ -57,6 +58,11 @@ struct FlitsScherm: View {
     var body: some View {
         VStack {
             if isSessionActive {
+                if showProgressBar {
+                    CircularProgressBar(progress: Double(countdown) / Double(flitstijd), knownCount: knownCount)
+                        .padding(.top, 20)
+                }
+
                 flashCardDeckView
             } else {
                 SessionSummaryView(
@@ -66,12 +72,8 @@ struct FlitsScherm: View {
                 )
             }
         }
-        .onAppear {
-            resetSession()
-        }
-        .onDisappear {
-            stopTimers()
-        }
+        .onAppear { resetSession() }
+        .onDisappear { stopTimers() }
     }
 
     private var flashCardDeckView: some View {
@@ -97,14 +99,14 @@ struct FlitsScherm: View {
                                 }
                             }
                         }
-                        .offset(x: self.isTopCard(cardView: cardView) ? self.dragState.translation.width : 0, y: self.isTopCard(cardView: cardView) ? self.dragState.translation.height : 0)
+                        .offset(x: self.isTopCard(cardView: cardView) ? self.dragState.translation.width : 0)
                         .scaleEffect(self.dragState.isDragging && self.isTopCard(cardView: cardView) ? 0.95 : 1.0)
-                        .rotationEffect(Angle(degrees: self.isTopCard(cardView: cardView) ? Double(self.dragState.translation.width / 10) : 0))
-                        .animation(.interpolatingSpring(stiffness: 180, damping: 100), value: self.dragState.translation)
+                        .rotationEffect(Angle(degrees: self.isTopCard(cardView: cardView) ? Double(self.dragState.translation.width / 15) : 0))
+                        .animation(.interpolatingSpring(stiffness: 100, damping: 50), value: self.dragState.translation)
                         .transition(self.removalTransition)
                         .gesture(LongPressGesture(minimumDuration: 0.01)
                             .sequenced(before: DragGesture())
-                            .updating(self.$dragState, body: { (value, state, transaction) in
+                            .updating(self.$dragState) { value, state, _ in
                                 switch value {
                                 case .first(true):
                                     state = .pressing
@@ -113,35 +115,27 @@ struct FlitsScherm: View {
                                 default:
                                     break
                                 }
-                            })
-                            .onChanged({ (value) in
-                                guard case .second(true, let drag?) = value else {
-                                    return
-                                }
-
+                            }
+                            .onChanged { value in
+                                guard case .second(true, let drag?) = value else { return }
+                                
                                 if drag.translation.width < -self.dragThreshold {
-                                    self.removalTransition = .leadingBottom
+                                    self.removalTransition = .move(edge: .leading)
+                                } else if drag.translation.width > self.dragThreshold {
+                                    self.removalTransition = .move(edge: .trailing)
                                 }
+                                resetNoSwipeTimer()
+                            }
+                            .onEnded { value in
+                                guard case .second(true, let drag?) = value else { return }
 
-                                if drag.translation.width > self.dragThreshold {
-                                    self.removalTransition = .trailingBottom
-                                }
-                                resetNoSwipeTimer() // Reset the inactivity timer on swipe
-                            })
-                            .onEnded({ (value) in
-                                guard case .second(true, let drag?) = value else {
-                                    return
-                                }
-
-                                if drag.translation.width < -self.dragThreshold || drag.translation.width > self.dragThreshold {
+                                if abs(drag.translation.width) > self.dragThreshold {
                                     if let startTime = displayStartTime {
                                         let swipeDirection: SwipeDirection = drag.translation.width < 0 ? .left : .right
                                         let newStatus = WoordHelper.determinePracticeStatus(startTime: startTime, swipeDirection: swipeDirection)
 
                                         if let topWord = cardViews.first?.woord {
                                             WoordHelper.updatePracticeStatus(for: topWord, with: newStatus)
-                                            print("Updated status for \(topWord.naam): \(newStatus.rawValue)")
-
                                             if newStatus == .known || newStatus == .slow {
                                                 knownCount += 1
                                             } else if newStatus == .morePractice {
@@ -149,9 +143,9 @@ struct FlitsScherm: View {
                                             }
                                         }
                                     }
-                                    moveCard() // Move to the next card
+                                    moveCard()
                                 }
-                            })
+                            }
                         )
                 }
             }
@@ -165,44 +159,44 @@ struct FlitsScherm: View {
 
     private func setupCardViews() {
         let activeWords = lijst.woorden.filter { $0.isActive }
-        
-        cardViews = []
-        for index in 0..<min(activeWords.count, 2) {
-            let woord = activeWords[index]
-            cardViews.append(CardView(woord: woord))
-        }
+        cardViews = activeWords.prefix(2).map { CardView(woord: $0) }
         currentIndex = 2
     }
 
     private func isTopCard(cardView: CardView) -> Bool {
-        guard let index = cardViews.firstIndex(where: { $0.id == cardView.id }) else {
-            return false
-        }
-        return index == 0
+        cardViews.first?.id == cardView.id
     }
 
-    private func moveCard() {
-        // Ensure there is a card to remove; if not, end the session
+    private func moveCard(automatic: Bool = false) {
         guard !cardViews.isEmpty else {
             isSessionActive = false
             return
         }
 
-        // Check if the top card should be marked as MorePractice (when auto-replaced)
         if let topWord = cardViews.first?.woord {
-            WoordHelper.updatePracticeStatus(for: topWord, with: .morePractice)
-            print("Automatically updated status for \(topWord.naam): MorePractice")
-            
-            // Track the word for more practice if not already in the list
-            if !morePracticeWords.contains(where: { $0.id == topWord.id }) {
+            let status: Woord.PracticeState = automatic ? .morePractice : .known
+            WoordHelper.updatePracticeStatus(for: topWord, with: status)
+
+            if status == .morePractice {
                 morePracticeWords.append(topWord)
             }
         }
 
-        // Animate the removal of the top card and the addition of a new card
-        withAnimation(.easeInOut(duration: 0.3)) {
-            cardViews.removeFirst()
+        // Use different animations for swipe and no-swipe
+        if automatic {
+            withAnimation(.bouncy) { // Slower, subtle animation for no-swipe
+                removalTransition = .move(edge:.top) // Move to bottom on no-swipe
+                cardViews.removeFirst()
+            }
+        } else {
+            withAnimation(.interpolatingSpring(stiffness: 200, damping: 20)) { // Dynamic spring for swipe
+                removalTransition = .move(edge: .trailing) // Move to side on swipe
+                cardViews.removeFirst()
+            }
+        }
 
+        // Delay addition of the next card to avoid snap-back effect
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             let activeWords = lijst.woorden.filter { $0.isActive }
             
             if currentIndex < activeWords.count {
@@ -211,12 +205,12 @@ struct FlitsScherm: View {
                 cardViews.append(newCardView)
                 currentIndex += 1
             } else {
-                isSessionActive = false  // End session when there are no more active cards
+                isSessionActive = false
             }
-        }
 
-        displayStartTime = WoordHelper.startTrackingTime()
-        resetNoSwipeTimer()  // Reset the timer for showing the next card automatically
+            displayStartTime = WoordHelper.startTrackingTime()
+            resetNoSwipeTimer()
+        }
     }
 
     private func resetSession() {
@@ -226,7 +220,7 @@ struct FlitsScherm: View {
         morePracticeWords = []
         setupCardViews()
         startTimer()
-        resetNoSwipeTimer() // Start inactivity timer at the beginning of the session
+        resetNoSwipeTimer()
     }
     
     private func startTimer() {
@@ -236,7 +230,7 @@ struct FlitsScherm: View {
                 countdown -= 1
             } else {
                 timer.invalidate()
-                isSessionActive = false  // End session when time is up
+                isSessionActive = false
             }
         }
     }
@@ -244,7 +238,7 @@ struct FlitsScherm: View {
     private func resetNoSwipeTimer() {
         noSwipeTimer?.invalidate()
         noSwipeTimer = Timer.scheduledTimer(withTimeInterval: newCardTime, repeats: false) { _ in
-            moveCard() // Move to the next card if no swipe detected within the interval
+            moveCard(automatic: true)
         }
     }
 
@@ -253,23 +247,6 @@ struct FlitsScherm: View {
         noSwipeTimer?.invalidate()
         sessionTimer = nil
         noSwipeTimer = nil
-    }
-}
-
-// AnyTransition extensions
-extension AnyTransition {
-    static var trailingBottom: AnyTransition {
-        AnyTransition.asymmetric(
-            insertion: .identity,
-            removal: AnyTransition.move(edge: .trailing).combined(with: .move(edge: .bottom))
-        )
-    }
-
-    static var leadingBottom: AnyTransition {
-        AnyTransition.asymmetric(
-            insertion: .identity,
-            removal: AnyTransition.move(edge: .leading).combined(with: .move(edge: .bottom))
-        )
     }
 }
 

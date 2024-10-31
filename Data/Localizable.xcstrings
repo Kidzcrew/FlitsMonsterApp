@@ -31,6 +31,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld Woorden" : {
       "localizations" : {
         "en" : {
@@ -62,13 +65,7 @@
     "3 sec" : {
 
     },
-    "5 sec" : {
-
-    },
     "15 sec" : {
-
-    },
-    "20 sec" : {
 
     },
     "Aantal resterende woorden: %lld" : {
@@ -328,6 +325,9 @@
         }
       }
     },
+    "Lees deze woorden nog eens door:" : {
+
+    },
     "Lettertype" : {
 
     },
@@ -465,6 +465,9 @@
         }
       }
     },
+    "Progress Bar" : {
+
+    },
     "Reload sample data" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -575,6 +578,9 @@
         }
       }
     },
+    "Show Progress Bar" : {
+
+    },
     "Sluiten" : {
       "localizations" : {
         "en" : {
@@ -595,12 +601,6 @@
           }
         }
       }
-    },
-    "Tijd tot nieuw kaartje" : {
-
-    },
-    "Tijd tot nieuw kaartje: %lld seconden" : {
-
     },
     "Unbookmark" : {
 
@@ -737,9 +737,6 @@
           }
         }
       }
-    },
-    "Woorden om nog meer te oefenen:" : {
-
     },
     "Woorden:" : {
       "localizations" : {
