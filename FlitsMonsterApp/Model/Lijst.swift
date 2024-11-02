@@ -61,3 +61,10 @@ extension Lijst {
         case nl, en
     }
 }
+
+extension Lijst {
+    func verhoogVoortgang(in context: ModelContext) {
+        self.voortgang += 1
+        try? context.save() // Sla de wijziging op in SwiftData
+    }
+}

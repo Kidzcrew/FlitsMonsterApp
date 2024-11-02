@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct FlitsScherm: View {
+    @Environment(\.modelContext) private var context
     let lijst: Lijst
 
     enum DragState {
@@ -51,7 +52,13 @@ struct FlitsScherm: View {
     private let dragThreshold: CGFloat = 80.0
 
     @State private var displayStartTime: Date?
-    @State private var isSessionActive = true
+    @State private var isSessionActive = true {
+        didSet {
+            if !isSessionActive {
+                lijst.verhoogVoortgang(in: context)
+            }
+        }
+    }
     @State private var knownCount = 0
     @State private var morePracticeWords: [Woord] = []
 

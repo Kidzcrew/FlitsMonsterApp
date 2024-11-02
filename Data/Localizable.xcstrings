@@ -309,6 +309,9 @@
         }
       }
     },
+    "Klankweergave" : {
+
+    },
     "Language" : {
       "localizations" : {
         "en" : {
@@ -601,6 +604,9 @@
           }
         }
       }
+    },
+    "Toon klanken in afzonderlijke hokjes" : {
+
     },
     "Unbookmark" : {
 

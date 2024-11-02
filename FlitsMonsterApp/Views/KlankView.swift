@@ -61,6 +61,8 @@ func splitIntoKlanken(word: String) -> [String] {
 }
 
 // View voor een enkel klank-hokje
+// KlankView.swift
+
 struct KlankView: View {
     let klank: String
     
@@ -68,20 +70,21 @@ struct KlankView: View {
         Text(klank)
             .font(.largeTitle)
             .fontWeight(.bold)
-            .frame(width: boxWidth(), height: 50) // Dynamische breedte
+            .minimumScaleFactor(0.3) // Zorgt voor extra schaalbaarheid binnen elk hokje
+            .foregroundColor(.black)
+            .frame(width: boxWidth(), height: 50)
             .background(Color.white)
             .cornerRadius(8)
-            .shadow(radius: 2)
-           // .padding(1)
+            .shadow(color: Color.black.opacity(0.05), radius: 3, x: 2, y: 2)
+            .padding(1)
     }
     
-    // Bepaal de breedte op basis van de lengte van de klank
     private func boxWidth() -> CGFloat {
         switch klank.count {
-        case 4: return 100 // Vierklank
-        case 3: return 75  // Drieklank
-        case 2: return 60  // Tweeklank
-        default: return 40 // Enkel klank
+        case 4: return 100
+        case 3: return 75
+        case 2: return 60
+        default: return 40
         }
     }
 }
@@ -92,14 +95,21 @@ struct KlankWoordView: View {
     
     var body: some View {
         HStack {
-            ForEach(splitIntoKlanken(word: woord), id: \.self) { klank in
+            ForEach(Array(splitIntoKlanken(word: woord).enumerated()), id: \.offset) { index, klank in
                 KlankView(klank: klank)
             }
         }
-        .padding(5)
-        .background(Color(white: 0.9))
+        .padding()
+        .scaleEffect(scaleFactor()) // Dynamische schaalverkleining voor lange woorden
+        //.background(Color(white: 0.9))
         .cornerRadius(12)
         .shadow(radius: 5)
+    }
+    
+    // Berekent een schaalfactor afhankelijk van het aantal klanken
+    private func scaleFactor() -> CGFloat {
+        let klanken = splitIntoKlanken(word: woord)
+        return klanken.count > 6 ? 0.8 : 1.0 // Schaal in als meer dan 6 klanken
     }
 }
 
@@ -108,7 +118,7 @@ struct KlankWoordView_Previews: PreviewProvider {
     static var previews: some View {
         KlankWoordView(woord: "leeuwen")
             .padding()
-            .background(Color.black)
+            .background(Color.white)
             .previewLayout(.sizeThatFits)
     }
 }
